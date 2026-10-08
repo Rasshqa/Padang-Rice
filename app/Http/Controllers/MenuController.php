@@ -43,7 +43,20 @@ class MenuController extends Controller
         $maxPrice = Menu::available()->max('price');
         $menus = $query->paginate(16)->withQueryString();
 
-        return view('menu.index', compact('menus', 'totalMenus', 'minPrice', 'maxPrice'));
+        // Pass cart with menu details to view
+        $cart = session('cart', []);
+        $cartWithMenus = [];
+        foreach ($cart as $menuId => $item) {
+            $menu = Menu::find($menuId);
+            if ($menu) {
+                $cartWithMenus[$menuId] = [
+                    'menu' => $menu,
+                    'quantity' => $item['quantity'],
+                ];
+            }
+        }
+
+        return view('menu.index', compact('menus', 'totalMenus', 'minPrice', 'maxPrice', 'cartWithMenus'));
     }
 
     public function show($id)
