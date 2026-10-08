@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pesanan', [OrderController::class, 'history'])->name('orders.history');
     Route::get('/pesanan/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
+
 Route::get('/tentang', [AboutController::class, 'index'])->name('about');
 Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
 Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
@@ -41,8 +42,10 @@ Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery');
 Route::get('/kontak', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
 
+// ===== UNIFIED MENU + CHECKOUT =====
 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 Route::get('/menu/{menu}', [MenuController::class, 'show'])->name('menu.show');
+Route::post('/menu/checkout', [OrderController::class, 'store'])->name('menu.checkout')->middleware('auth');
 
 Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
 Route::post('/keranjang/tambah', [CartController::class, 'add'])->name('cart.add');
@@ -79,13 +82,13 @@ Route::middleware(['auth:admin', 'admin'])->group(function () {
     Route::resource('admin/payment-methods', \App\Http\Controllers\Admin\PaymentMethodController::class)
         ->names('admin.payment-methods')
         ->except(['show']);
-    Route::get('/admin/orders', [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.orders.index');
-    Route::get('/admin/orders/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('admin.orders.show');
-    Route::patch('/admin/orders/{order}/status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
-    Route::get('/admin/payments', [\App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('admin.payments.index');
-    Route::get('/admin/payments/{payment}', [\App\Http\Controllers\Admin\PaymentController::class, 'show'])->name('admin.payments.show');
-    Route::post('/admin/payments/{payment}/approve', [\App\Http\Controllers\Admin\PaymentController::class, 'approve'])->name('admin.payments.approve');
-    Route::post('/admin/payments/{payment}/reject', [\App\Http\Controllers\Admin\PaymentController::class, 'reject'])->name('admin.payments.reject');
+    
+    // ===== UNIFIED ORDER MANAGEMENT =====
+    Route::get('/admin/pesanan', [\App\Http\Controllers\Admin\OrderManagementController::class, 'index'])->name('admin.order-management.index');
+    Route::patch('/admin/pesanan/{order}/status', [\App\Http\Controllers\Admin\OrderManagementController::class, 'updateOrderStatus'])->name('admin.order-management.update-status');
+    Route::post('/admin/order-management/payment/{payment}/approve', [\App\Http\Controllers\Admin\OrderManagementController::class, 'approvePayment'])->name('admin.order-management.approve-payment');
+    Route::post('/admin/order-management/payment/{payment}/reject', [\App\Http\Controllers\Admin\OrderManagementController::class, 'rejectPayment'])->name('admin.order-management.reject-payment');
+    
     Route::get('/admin/pengaturan', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('admin.settings.index');
     Route::post('/admin/pengaturan', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('admin.settings.update');
 });

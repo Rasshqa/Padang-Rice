@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin - Padang Rice')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -27,13 +28,9 @@
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                         Metode Pembayaran
                     </a>
-                    <a href="{{ route('admin.orders.index') }}" class="flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.orders.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
+                    <a href="{{ route('admin.order-management.index') }}" class="flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.order-management.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                        Kelola Pesanan
-                    </a>
-                    <a href="{{ route('admin.payments.index') }}" class="flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.payments.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
-                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Verifikasi Pembayaran
+                        Kelola Pesanan & Pembayaran
                     </a>
                     <a href="{{ route('admin.berita.index') }}" class="flex items-center px-4 py-3 rounded-lg {{ request()->routeIs('admin.berita.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
