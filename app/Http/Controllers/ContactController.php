@@ -9,7 +9,9 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('pages.contact');
+        $latitude = \App\Models\Setting::get('contact_latitude', -6.9175);
+        $longitude = \App\Models\Setting::get('contact_longitude', 107.6191);
+        return view('pages.contact', compact('latitude', 'longitude'));
     }
 
     public function store(Request $request)

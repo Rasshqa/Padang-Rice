@@ -15,50 +15,50 @@
         </div>
         @endif
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            <form action="{{ route('contact.store') }}" method="POST" class="space-y-4">
-                @csrf
-                <div>
-                    <input type="text" name="subject" placeholder="Subject" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand/50 @error('subject') border-red-500 @enderror"
-                           value="{{ old('subject') }}" required>
-                    @error('subject')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+        <form action="{{ route('contact.store') }}" method="POST" class="mb-16">
+            @csrf
+            <div class="flex flex-col lg:flex-row gap-6 mb-6">
+                <!-- Left column -->
+                <div class="flex-1 space-y-4">
+                    <div>
+                        <input type="text" name="subject" placeholder="Subject" 
+                               class="w-full px-5 py-4 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors @error('subject') border-red-500 @enderror"
+                               value="{{ old('subject') }}" required>
+                        @error('subject')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <input type="text" name="name" placeholder="Name" 
+                               class="w-full px-5 py-4 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors @error('name') border-red-500 @enderror"
+                               value="{{ old('name') }}" required>
+                        @error('name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <input type="email" name="email" placeholder="Email" 
+                               class="w-full px-5 py-4 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors @error('email') border-red-500 @enderror"
+                               value="{{ old('email') }}" required>
+                        @error('email')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
-                <div>
-                    <input type="text" name="name" placeholder="Name" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand/50 @error('name') border-red-500 @enderror"
-                           value="{{ old('name') }}" required>
-                    @error('name')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <input type="email" name="email" placeholder="Email" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand/50 @error('email') border-red-500 @enderror"
-                           value="{{ old('email') }}" required>
-                    @error('email')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <textarea name="message" placeholder="Message" rows="6" 
-                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand/50 resize-none @error('message') border-red-500 @enderror"
+                <!-- Right column -->
+                <div class="flex-1">
+                    <textarea name="message" placeholder="Message" 
+                              class="w-full h-full min-h-[200px] px-5 py-4 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors resize-none @error('message') border-red-500 @enderror"
                               required>{{ old('message') }}</textarea>
                     @error('message')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+            </div>
 
-                <button type="submit" class="btn-dark w-full text-center">KIRIM</button>
-            </form>
-
-            <div></div>
-        </div>
+            <button type="submit" class="w-full py-4 bg-black text-white font-bold tracking-widest text-sm hover:bg-gray-800 transition-colors">KIRIM PESAN</button>
+        </form>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <div class="text-center">
@@ -90,7 +90,7 @@
 
 <section class="pb-0">
     <div class="w-full h-96 bg-gray-200">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56211042336!2d107.57311709726562!3d-6.903444199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a1f93d3e815b2!2sBandung%2C%20Bandung%20City%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1234567890" 
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15864.0!2d{{ $longitude }}!3d{{ $latitude }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwNTUnMDEuNSJTIDEwN8KwMzcnMDguOCJF!5e0!3m2!1sen!2sid!4v1234567890" 
                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 </section>

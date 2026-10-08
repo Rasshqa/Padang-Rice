@@ -22,6 +22,8 @@ class SettingController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|max:255',
             'location' => 'required|max:255',
+            'contact_latitude' => 'required|numeric',
+            'contact_longitude' => 'required|numeric',
         ]);
 
         foreach ($validated as $key => $value) {

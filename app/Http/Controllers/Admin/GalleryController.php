@@ -42,7 +42,7 @@ class GalleryController extends Controller
 
         Gallery::create($validated);
 
-        return redirect()->route('admin.gallery.index')->with('success', 'Galeri berhasil ditambahkan!');
+        return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil ditambahkan!');
     }
 
     public function edit(Gallery $gallery)
@@ -69,7 +69,7 @@ class GalleryController extends Controller
 
         $gallery->update($validated);
 
-        return redirect()->route('admin.gallery.index')->with('success', 'Galeri berhasil diperbarui!');
+        return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil diperbarui!');
     }
 
     public function destroy(Gallery $gallery)
@@ -80,6 +80,6 @@ class GalleryController extends Controller
 
         $gallery->delete();
 
-        return redirect()->route('admin.gallery.index')->with('success', 'Galeri berhasil dihapus!');
+        return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil dihapus!');
     }
 }

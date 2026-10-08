@@ -4,7 +4,7 @@
             <div>
                 <h3 class="text-lg font-bold font-display mb-4">Padang Rice</h3>
                 <p class="text-sm text-gray-400 leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Restoran Padang Rice menyajikan hidangan khas Minangkabau dengan cita rasa autentik. Nikmati kelezatan rendang, gulai, sambal hijau, dan berbagai menu Padang lainnya yang menggugah selera. Kami berkomitmen menghadirkan pengalaman kuliner Nusantara terbaik untuk Anda.
                 </p>
                 <div class="flex items-center gap-3 mt-4">
                     <a href="#" class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center hover:bg-blue-700 transition">
