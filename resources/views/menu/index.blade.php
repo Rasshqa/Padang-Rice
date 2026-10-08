@@ -74,7 +74,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">No. Telepon *</label>
                     <input type="text" name="customer_phone" required
                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
-                           placeholder="08xxx">
+                           placeholder="08xxxxxxxxxx">
                 </div>
             </div>
 
@@ -82,59 +82,60 @@
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Metode Pengiriman *</label>
                 <div class="grid grid-cols-2 gap-3 mb-3">
-                    <label id="label-pickup" onclick="setDelivery('pickup')" class="relative flex flex-col gap-2 p-3 border-2 border-yellow-500 bg-yellow-50 rounded-xl cursor-pointer transition">
+                    <label class="delivery-option relative flex items-center gap-2 p-3 border-2 border-yellow-500 bg-yellow-50 rounded-xl cursor-pointer" id="label-pickup">
                         <input type="radio" name="delivery_method" value="pickup" checked class="sr-only">
-                        <div class="flex items-center justify-between">
-                            <span class="font-semibold text-sm text-gray-900">Ambil Sendiri</span>
-                            <div id="check-pickup" class="w-4 h-4 rounded-full border-2 border-yellow-500 flex items-center justify-center">
-                                <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                            </div>
+                        <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-yellow-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                         </div>
-                        <span class="text-xs text-green-600 font-bold">Gratis</span>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-bold text-gray-900 text-xs">Ambil Sendiri</p>
+                            <p class="text-[10px] text-green-600 font-medium">Gratis</p>
+                        </div>
                     </label>
-
-                    <label id="label-delivery" onclick="setDelivery('delivery')" class="relative flex flex-col gap-2 p-3 border-2 border-gray-200 rounded-xl cursor-pointer transition hover:border-yellow-300">
+                    <label class="delivery-option relative flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-yellow-300" id="label-delivery">
                         <input type="radio" name="delivery_method" value="delivery" class="sr-only">
-                        <div class="flex items-center justify-between">
-                            <span class="font-semibold text-sm text-gray-900">Diantar</span>
-                            <div id="check-delivery" class="w-4 h-4 rounded-full border-2 border-gray-300 hidden"></div>
+                        <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
                         </div>
-                        <span class="text-xs text-orange-600 font-bold">+Rp 10.000</span>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-bold text-gray-900 text-xs">Diantar</p>
+                            <p class="text-[10px] text-orange-600 font-medium">+Rp 10.000</p>
+                        </div>
                     </label>
                 </div>
+            </div>
 
-                {{-- Delivery Address Fields --}}
-                <div id="delivery-fields" class="hidden space-y-3">
+            {{-- Delivery Fields --}}
+            <div id="delivery-fields" class="space-y-3 hidden">
+                <div class="relative">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Alamat Pengiriman *</label>
                     <div class="relative">
                         <input type="text" id="address-input" name="delivery_address"
-                               class="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-28 text-sm focus:ring-2 focus:ring-yellow-500 transition outline-none"
-                               placeholder="Cari atau ketik alamat"
-                               autocomplete="off">
-                        <button type="button" onclick="getCurrentLocation()" id="loc-btn"
-                                class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1">
+                               class="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-24 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                               placeholder="Cari alamat...">
+                        <button type="button" id="loc-btn" onclick="getCurrentLocation()"
+                                class="absolute right-2 top-1/2 -translate-y-1/2 bg-yellow-600 hover:bg-yellow-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-semibold flex items-center gap-1 transition">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             Lokasi
                         </button>
-                        <div id="suggestions" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto z-20"></div>
                     </div>
-                    <div id="map" class="h-48 rounded-xl border border-gray-200 overflow-hidden"></div>
-                    <p class="text-xs text-gray-400">Klik peta atau geser marker</p>
-                    <input type="hidden" name="latitude" id="latitude">
-                    <input type="hidden" name="longitude" id="longitude">
+                    <div id="suggestions" class="absolute z-20 w-full bg-white border border-gray-200 rounded-lg shadow-lg mt-1 hidden max-h-48 overflow-y-auto"></div>
                 </div>
+                <div id="map" class="w-full h-48 rounded-xl border border-gray-200"></div>
+                <input type="hidden" name="latitude" id="latitude">
+                <input type="hidden" name="longitude" id="longitude">
             </div>
 
             {{-- Notes --}}
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Catatan (opsional)</label>
                 <textarea name="notes" rows="2"
-                          class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-yellow-500 transition outline-none resize-none"
-                          placeholder="Contoh: Tidak pakai sambal..."></textarea>
+                          class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none resize-none"
+                          placeholder="Contoh: Tidak pakai sambal, tingkat pedas sedang"></textarea>
             </div>
 
-            {{-- Submit Button --}}
             <button type="submit" id="submitBtn"
-                    class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3.5 rounded-xl transition shadow-sm text-base">
+                    class="w-full bg-yellow-600 hover:bg-yellow-700 active:scale-[0.98] text-white font-bold py-3 rounded-xl transition-all shadow-sm">
                 Buat Pesanan →
             </button>
         </form>
@@ -142,10 +143,10 @@
 </div>
 
 {{-- Floating Checkout Button --}}
-<button id="floating-checkout-btn" onclick="openCheckout()" class="hidden fixed bottom-6 right-6 z-50 bg-yellow-600 hover:bg-yellow-700 text-white font-bold px-6 py-4 rounded-full shadow-2xl transition-all flex items-center gap-3">
+<button id="floating-checkout-btn" onclick="openCheckout()"
+        class="hidden fixed bottom-6 right-6 z-50 bg-yellow-600 hover:bg-yellow-700 text-white font-bold px-6 py-4 rounded-full shadow-2xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-    <span>Checkout</span>
-    <span id="floating-cart-count" class="w-6 h-6 bg-white text-yellow-700 rounded-full flex items-center justify-center text-xs font-bold"></span>
+    <span id="floating-cart-count">0</span>
 </button>
 
 <div class="min-h-screen bg-[#f5f4f1] pt-20">
@@ -303,31 +304,29 @@
             @if($menus->isEmpty())
                 <div class="bg-white rounded-xl border border-gray-200 p-16 text-center">
                     <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M12 12h.01M12 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
-                    <h3 class="text-gray-700 font-bold text-lg mb-1">Menu Tidak Ditemukan</h3>
-                    <p class="text-gray-500 text-sm">Coba filter atau kata kunci lain</p>
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">Menu tidak ditemukan</h3>
+                    <p class="text-gray-400 text-sm mb-6">Coba ubah filter atau kata pencarian Anda</p>
+                    <a href="{{ route('menu.index') }}" class="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-2.5 rounded-lg transition">
+                        Lihat Semua Menu
+                    </a>
                 </div>
             @else
                 {{-- Menu Grid --}}
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     @foreach($menus as $menu)
-                        <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col shadow-sm hover:shadow-lg transition-shadow duration-300 group">
-                            {{-- IMAGE — fixed 240px height --}}
-                            <div class="relative h-60 overflow-hidden bg-gray-100">
-                                <a href="{{ route('menu.show', $menu) }}">
+                        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden group hover:border-gray-300 hover:shadow-lg transition-all duration-300 flex flex-col"
+                             id="menu-card-{{ $menu->id }}">
+
+                            {{-- IMAGE — 4:3 aspect ratio --}}
+                            <div class="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-gray-100">
+                                <a href="{{ route('menu.show', $menu) }}" class="block w-full h-full">
                                     <img src="{{ $menu->image ?? 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400' }}"
                                          alt="{{ $menu->name }}"
-                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                         loading="lazy"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                          onerror="this.src='https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400'">
                                 </a>
-
-                                @if($menu->order_count > 20)
-                                    <span class="absolute top-3 left-3 bg-[#7B2E2E] text-white text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-md">Bestseller</span>
-                                @elseif($menu->id > ($totalMenus - 8))
-                                    <span class="absolute top-3 left-3 bg-gray-900 text-white text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-md">Baru</span>
-                                @endif
 
                                 @if(!$menu->available)
                                     <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -400,40 +399,8 @@ const DELIVERY_FEE = 10000;
 
 let map, marker, searchTimeout;
 let currentDelivery = 'pickup';
-        toast.classList.add('translate-x-[120%]');
-    }, 3000);
-}
-
-function wishlistToggle(btn) {
-    const svg = btn.querySelector('svg');
-    const filled = btn.dataset.liked === '1';
-    if (filled) {
-        btn.dataset.liked = '';
-        svg.setAttribute('fill', 'none');
-    } else {
-        btn.dataset.liked = '1';
-        svg.setAttribute('fill', '#ef4444');
-    }
-}
-
-function sortMenu(val) {
-    const url = new URL(window.location.href);
-    if (val) url.searchParams.set('sort', val);
-    else url.searchParams.delete('sort');
-    window.location = url.toString();
-}
-
-function applyPrice() {
-    const val = document.getElementById('priceRange').value;
-    document.getElementById('priceMaxInput').value = val;
-    document.getElementById('filterForm').submit();
-}
-</script>
-@endsection
-let cartData = @json(session('cart', []));
 let cartMenuData = @json($cartWithMenus);
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     updateCheckoutUI();
 });
@@ -458,9 +425,6 @@ function addToCart(menuId, menuName) {
     .then(data => {
         if (data.success) {
             showToast(data.message, 'success');
-            updateCartBadge(data.cart_count);
-            
-            // Reload page to refresh cart data
             location.reload();
         } else {
             showToast(data.message, 'error');
@@ -569,42 +533,35 @@ function setDelivery(method) {
 
     ['pickup', 'delivery'].forEach(m => {
         const label = document.getElementById('label-' + m);
-        const check = document.getElementById('check-' + m);
         if (m === method) {
             label.classList.add('border-yellow-500', 'bg-yellow-50');
             label.classList.remove('border-gray-200');
-            check.classList.remove('hidden');
-            check.innerHTML = '<div class="w-2 h-2 bg-yellow-500 rounded-full"></div>';
         } else {
             label.classList.remove('border-yellow-500', 'bg-yellow-50');
             label.classList.add('border-gray-200');
-            check.classList.add('hidden');
         }
     });
 
     const deliveryFields = document.getElementById('delivery-fields');
-    deliveryFields.classList.toggle('hidden', method !== 'delivery');
+    if (method === 'delivery') {
+        deliveryFields.classList.remove('hidden');
+        if (!map) initMap();
+    } else {
+        deliveryFields.classList.add('hidden');
+    }
 
     renderCheckoutCart();
-
-    if (method === 'delivery' && !map) {
-        setTimeout(initMap, 100);
-    } else if (map) {
-        setTimeout(() => map.invalidateSize(), 100);
-    }
 }
 
+document.querySelectorAll('input[name="delivery_method"]').forEach(radio => {
+    radio.addEventListener('change', () => setDelivery(radio.value));
+});
+
 function initMap() {
-    const defaultLat = -6.9175, defaultLng = 107.6191;
-    map = L.map('map').setView([defaultLat, defaultLng], 13);
+    map = L.map('map').setView([-0.9471, 100.4172], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
     }).addTo(map);
-
-    map.on('click', e => {
-        setMarker(e.latlng.lat, e.latlng.lng);
-        reverseGeocode(e.latlng.lat, e.latlng.lng);
-    });
 }
 
 function setMarker(lat, lng) {
@@ -633,7 +590,7 @@ function reverseGeocode(lat, lng) {
 function getCurrentLocation() {
     if (!navigator.geolocation) return alert('Geolocation tidak didukung');
     const btn = document.getElementById('loc-btn');
-    btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>`;
+    btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Mencari...`;
     btn.disabled = true;
 
     navigator.geolocation.getCurrentPosition(
@@ -689,7 +646,7 @@ document.addEventListener('click', e => {
     }
 });
 
-document.getElementById('checkoutForm').addEventListener('submit', () => {
+document.getElementById('checkoutForm')?.addEventListener('submit', () => {
     const btn = document.getElementById('submitBtn');
     btn.innerHTML = `<svg class="w-5 h-5 animate-spin inline mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Memproses...`;
     btn.disabled = true;
@@ -744,3 +701,4 @@ function applyPrice() {
     document.getElementById('filterForm').submit();
 }
 </script>
+@endsection
