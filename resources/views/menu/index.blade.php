@@ -744,4 +744,3 @@ function applyPrice() {
     document.getElementById('filterForm').submit();
 }
 </script>
-@endsection
