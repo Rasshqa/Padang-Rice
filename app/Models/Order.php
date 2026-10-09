@@ -66,14 +66,23 @@ class Order extends Model
 
     public function getStatusLabelAttribute()
     {
-        return [
+        $labels = [
             'pending' => 'Menunggu Konfirmasi',
             'confirmed' => 'Dikonfirmasi',
             'preparing' => 'Diproses',
             'ready' => 'Siap',
+            'in_transit' => 'Dalam Perjalanan',
             'delivered' => 'Selesai',
+            'completed' => 'Selesai',
             'cancelled' => 'Dibatalkan',
-        ][$this->status] ?? ucfirst($this->status);
+        ];
+
+        // For delivery orders, show "Dalam Perjalanan" when status is "in_transit"
+        if ($this->delivery_method === 'delivery' && $this->status === 'ready') {
+            return 'Siap Diantar';
+        }
+
+        return $labels[$this->status] ?? ucfirst($this->status);
     }
 
     public function getStatusColorAttribute()
@@ -83,7 +92,9 @@ class Order extends Model
             'confirmed' => 'bg-blue-100 text-blue-700',
             'preparing' => 'bg-indigo-100 text-indigo-700',
             'ready' => 'bg-green-100 text-green-700',
-            'delivered' => 'bg-gray-100 text-gray-700',
+            'in_transit' => 'bg-purple-100 text-purple-700',
+            'delivered' => 'bg-teal-100 text-teal-700',
+            'completed' => 'bg-gray-100 text-gray-700',
             'cancelled' => 'bg-red-100 text-red-700',
         ][$this->status] ?? 'bg-gray-100 text-gray-700';
     }

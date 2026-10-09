@@ -14,6 +14,7 @@
                     <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
                     <option value="preparing" {{ request('status') === 'preparing' ? 'selected' : '' }}>Diproses</option>
                     <option value="ready" {{ request('status') === 'ready' ? 'selected' : '' }}>Siap</option>
+                    <option value="in_transit" {{ request('status') === 'in_transit' ? 'selected' : '' }}>Dalam Perjalanan</option>
                     <option value="delivered" {{ request('status') === 'delivered' ? 'selected' : '' }}>Selesai</option>
                     <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
                 </select>
@@ -25,7 +26,7 @@
                 <p class="text-gray-500">Belum ada pesanan</p>
             </div>
         @else
-            <div class="bg-white rounded-xl shadow overflow-hidden">
+            <div class="bg-white rounded-xl shadow overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-gray-50">
                         <tr>

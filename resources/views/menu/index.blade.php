@@ -122,11 +122,16 @@
                     <div id="suggestions" class="absolute z-20 w-full bg-white border border-gray-200 rounded-lg shadow-lg mt-1 hidden max-h-48 overflow-y-auto"></div>
                 </div>
                 <div id="map" class="w-full h-48 rounded-xl border border-gray-200"></div>
+                <div id="distance-info" class="hidden bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-xs">
+                    <div class="flex items-center justify-between">
+                        <span class="text-blue-700 font-medium">Jarak dari restoran:</span>
+                        <span id="distance-value" class="font-bold text-blue-900">0 km</span>
+                    </div>
+                </div>
                 <input type="hidden" name="latitude" id="latitude">
                 <input type="hidden" name="longitude" id="longitude">
             </div>
 
-            {{-- Notes --}}
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Catatan (opsional)</label>
                 <textarea name="notes" rows="2"
@@ -144,7 +149,7 @@
 
 {{-- Floating Checkout Button --}}
 <button id="floating-checkout-btn" onclick="openCheckout()"
-        class="hidden fixed bottom-6 right-6 z-50 bg-yellow-600 hover:bg-yellow-700 text-white font-bold px-6 py-4 rounded-full shadow-2xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
+        class="hidden fixed bottom-6 right-24 z-50 bg-yellow-600 hover:bg-yellow-700 text-white font-bold px-6 py-4 rounded-full shadow-2xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
     <span id="floating-cart-count">0</span>
 </button>
@@ -387,22 +392,50 @@
         </div>
     </div>
 </div>
-@endsection
 
-@section('scripts')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const CART_AJAX_URL = '{{ route('cart.add.ajax') }}';
 const CSRF_TOKEN = '{{ csrf_token() }}';
-const DELIVERY_FEE = 10000;
+const CALC_DELIVERY_URL = '{{ route('api.calculate-delivery-fee') }}';
+const RESTAURANT_LAT = {{ (float) config('restaurant.latitude') }};
+const RESTAURANT_LNG = {{ (float) config('restaurant.longitude') }};
+const RESTAURANT_NAME = '{{ config('restaurant.name') }}';
 
-let map, marker, searchTimeout;
+let map, marker, restaurantMarker, searchTimeout;
 let currentDelivery = 'pickup';
 let cartMenuData = @json($cartWithMenus);
+let currentDeliveryFee = 0;
+let currentDistance = 0;
+let isCalculatingFee = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     updateCheckoutUI();
+    // Toggle delivery method
+    document.querySelectorAll('input[name="delivery_method"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Update UI label highlight
+            document.querySelectorAll('.delivery-option').forEach(label => {
+                label.classList.remove('border-yellow-500', 'bg-yellow-50');
+                label.classList.add('border-gray-200');
+            });
+            const parentLabel = this.closest('.delivery-option');
+            parentLabel.classList.add('border-yellow-500', 'bg-yellow-50');
+            parentLabel.classList.remove('border-gray-200');
+            
+            // Show/hide delivery fields
+            const deliveryFields = document.getElementById('delivery-fields');
+            if (this.value === 'delivery') {
+                deliveryFields.classList.remove('hidden');
+                if (!map) setTimeout(() => initMap(), 100);
+            } else {
+                deliveryFields.classList.add('hidden');
+            }
+            currentDelivery = this.value;
+            renderCheckoutCart();
+        });
+    });
 });
 
 function addToCart(menuId, menuName) {
@@ -425,7 +458,13 @@ function addToCart(menuId, menuName) {
     .then(data => {
         if (data.success) {
             showToast(data.message, 'success');
-            location.reload();
+            // Update cart data without page reload
+            if (!cartMenuData[data.menu_id]) {
+                cartMenuData[data.menu_id] = { menu: data.menu, quantity: 1 };
+            } else {
+                cartMenuData[data.menu_id].quantity += 1;
+            }
+            updateCheckoutUI();
         } else {
             showToast(data.message, 'error');
             resetBtn(btn);
@@ -440,23 +479,6 @@ function addToCart(menuId, menuName) {
 function resetBtn(btn) {
     btn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Tambah`;
     btn.disabled = false;
-}
-
-function updateCartBadge(count) {
-    const badges = document.querySelectorAll('[data-cart-badge]');
-    badges.forEach(b => {
-        b.textContent = count;
-        b.classList.toggle('hidden', count <= 0);
-    });
-
-    const navBadge = document.querySelector('nav a[href*="keranjang"] span');
-    if (navBadge) {
-        navBadge.textContent = count;
-        navBadge.classList.toggle('hidden', count <= 0);
-    }
-
-    const floatingCount = document.getElementById('floating-cart-count');
-    if (floatingCount) floatingCount.textContent = count;
 }
 
 function updateCheckoutUI() {
@@ -479,17 +501,22 @@ function updateCheckoutUI() {
     }
 }
 
+function calculateSubtotal() {
+    let subtotal = 0;
+    Object.values(cartMenuData).forEach(item => {
+        subtotal += item.menu.price * item.quantity;
+    });
+    return subtotal;
+}
+
 function renderCheckoutCart() {
     const container = document.getElementById('checkout-cart-items');
     let html = '';
-    let subtotal = 0;
 
     Object.entries(cartMenuData).forEach(([menuId, item]) => {
         const menu = item.menu;
         const quantity = item.quantity;
         const itemTotal = menu.price * quantity;
-        subtotal += itemTotal;
-        
         html += `
             <div class="flex items-center gap-2 text-xs">
                 <span class="flex-1 font-semibold text-gray-900">${quantity}x ${menu.name}</span>
@@ -500,22 +527,28 @@ function renderCheckoutCart() {
 
     container.innerHTML = html;
     
-    const deliveryFee = currentDelivery === 'delivery' ? DELIVERY_FEE : 0;
+    const subtotal = calculateSubtotal();
+    const deliveryFee = currentDelivery === 'delivery' ? currentDeliveryFee : 0;
     const total = subtotal + deliveryFee;
 
     document.getElementById('checkout-subtotal').textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
     document.getElementById('checkout-delivery-fee').textContent = 'Rp ' + deliveryFee.toLocaleString('id-ID');
     document.getElementById('checkout-total').textContent = 'Rp ' + total.toLocaleString('id-ID');
+    
+    // Update distance info if visible
+    updateDistanceInfo();
 }
 
 function openCheckout() {
-    if (Object.keys(cartMenuData).length === 0) {
-        showToast('Keranjang kosong', 'error');
-        return;
-    }
+    if (Object.keys(cartMenuData).length === 0) return;
     document.getElementById('checkout-overlay').classList.remove('hidden');
     document.getElementById('checkout-sidebar').classList.remove('translate-x-full');
     document.body.style.overflow = 'hidden';
+    
+    // Init map if delivery is selected
+    if (currentDelivery === 'delivery' && !map) {
+        setTimeout(() => initMap(), 100);
+    }
 }
 
 function closeCheckout() {
@@ -524,52 +557,55 @@ function closeCheckout() {
     document.body.style.overflow = '';
 }
 
-function setDelivery(method) {
-    currentDelivery = method;
-
-    document.querySelectorAll('input[name="delivery_method"]').forEach(r => {
-        r.checked = r.value === method;
-    });
-
-    ['pickup', 'delivery'].forEach(m => {
-        const label = document.getElementById('label-' + m);
-        if (m === method) {
-            label.classList.add('border-yellow-500', 'bg-yellow-50');
-            label.classList.remove('border-gray-200');
-        } else {
-            label.classList.remove('border-yellow-500', 'bg-yellow-50');
-            label.classList.add('border-gray-200');
-        }
-    });
-
-    const deliveryFields = document.getElementById('delivery-fields');
-    if (method === 'delivery') {
-        deliveryFields.classList.remove('hidden');
-        if (!map) initMap();
-    } else {
-        deliveryFields.classList.add('hidden');
-    }
-
-    renderCheckoutCart();
-}
-
-document.querySelectorAll('input[name="delivery_method"]').forEach(radio => {
-    radio.addEventListener('change', () => setDelivery(radio.value));
-});
-
 function initMap() {
-    map = L.map('map').setView([-0.9471, 100.4172], 13);
+    map = L.map('map').setView([RESTAURANT_LAT, RESTAURANT_LNG], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+    }).addTo(map);
+    
+    // Add restaurant marker
+    const restaurantIcon = L.divIcon({
+        html: `<div style="background:#dc2626;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);">
+                  <svg style="width:20px;height:20px;color:white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+               </div>`,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+        className: 'restaurant-marker'
+    });
+    
+    restaurantMarker = L.marker([RESTAURANT_LAT, RESTAURANT_LNG], { icon: restaurantIcon })
+        .addTo(map)
+        .bindPopup(`<div style="text-align:center;font-size:12px;"><strong>${RESTAURANT_NAME}</strong><br><small>Restoran</small></div>`);
+    
+    // Delivery radius circle
+    const radius = {{ (float) config('restaurant.delivery_radius_km') }} * 1000; // meters
+    L.circle([RESTAURANT_LAT, RESTAURANT_LNG], {
+        radius: radius,
+        color: '#eab308',
+        fillColor: '#fde047',
+        fillOpacity: 0.15,
+        weight: 2,
+        dashArray: '5, 5'
     }).addTo(map);
 }
 
 function setMarker(lat, lng) {
     if (marker) map.removeLayer(marker);
-    marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+    const deliveryIcon = L.divIcon({
+        html: `<div style="background:#eab308;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);">
+                  <svg style="width:18px;height:18px;color:white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+               </div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        className: 'delivery-marker'
+    });
+    
+    marker = L.marker([lat, lng], { draggable: true, icon: deliveryIcon }).addTo(map);
     marker.on('dragend', onMarkerDrag);
     document.getElementById('latitude').value = lat;
     document.getElementById('longitude').value = lng;
+    requestDeliveryFee(lat, lng);
 }
 
 function onMarkerDrag(e) {
@@ -577,6 +613,54 @@ function onMarkerDrag(e) {
     document.getElementById('latitude').value = pos.lat;
     document.getElementById('longitude').value = pos.lng;
     reverseGeocode(pos.lat, pos.lng);
+    requestDeliveryFee(pos.lat, pos.lng);
+}
+
+function requestDeliveryFee(lat, lng) {
+    if (isCalculatingFee) return;
+    isCalculatingFee = true;
+    
+    const subtotal = calculateSubtotal();
+    
+    fetch(CALC_DELIVERY_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': CSRF_TOKEN,
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({ latitude: lat, longitude: lng, subtotal: subtotal }),
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            currentDeliveryFee = data.delivery_fee;
+            currentDistance = data.distance;
+            renderCheckoutCart();
+        } else {
+            currentDeliveryFee = 0;
+            currentDistance = 0;
+            showToast(data.message || 'Lokasi di luar jangkauan', 'error');
+            renderCheckoutCart();
+        }
+    })
+    .catch(() => {
+        showToast('Gagal menghitung ongkir', 'error');
+    })
+    .finally(() => {
+        isCalculatingFee = false;
+    });
+}
+
+function updateDistanceInfo() {
+    const info = document.getElementById('distance-info');
+    if (!info) return;
+    if (currentDelivery === 'delivery' && currentDistance > 0) {
+        info.classList.remove('hidden');
+        document.getElementById('distance-value').textContent = currentDistance.toFixed(1) + ' km';
+    } else {
+        info.classList.add('hidden');
+    }
 }
 
 function reverseGeocode(lat, lng) {
@@ -590,7 +674,8 @@ function reverseGeocode(lat, lng) {
 function getCurrentLocation() {
     if (!navigator.geolocation) return alert('Geolocation tidak didukung');
     const btn = document.getElementById('loc-btn');
-    btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Mencari...`;
+    const originalHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Lokasi`;
+    btn.innerHTML = `<svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>`;
     btn.disabled = true;
 
     navigator.geolocation.getCurrentPosition(
@@ -598,14 +683,15 @@ function getCurrentLocation() {
             setMarker(pos.coords.latitude, pos.coords.longitude);
             map.setView([pos.coords.latitude, pos.coords.longitude], 15);
             reverseGeocode(pos.coords.latitude, pos.coords.longitude);
-            btn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Lokasi`;
+            btn.innerHTML = originalHTML;
             btn.disabled = false;
         },
         () => {
             alert('Tidak dapat mengakses lokasi');
-            btn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Lokasi`;
+            btn.innerHTML = originalHTML;
             btn.disabled = false;
-        }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
 }
 
@@ -678,27 +764,16 @@ function showToast(msg, type = 'success') {
 
 function wishlistToggle(btn) {
     const svg = btn.querySelector('svg');
-    const filled = btn.dataset.liked === '1';
-    if (filled) {
-        btn.dataset.liked = '';
-        svg.setAttribute('fill', 'none');
-    } else {
-        btn.dataset.liked = '1';
-        svg.setAttribute('fill', '#ef4444');
-    }
-}
-
-function sortMenu(val) {
-    const url = new URL(window.location.href);
-    if (val) url.searchParams.set('sort', val);
-    else url.searchParams.delete('sort');
-    window.location = url.toString();
-}
-
-function applyPrice() {
-    const val = document.getElementById('priceRange').value;
-    document.getElementById('priceMaxInput').value = val;
-    document.getElementById('filterForm').submit();
 }
 </script>
+
+<style>
+/* Mobile: Stack floating buttons vertically */
+@media (max-width: 640px) {
+    #floating-checkout-btn {
+        right: 1rem !important;
+        bottom: 5rem !important;
+    }
+}
+</style>
 @endsection

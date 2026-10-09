@@ -111,6 +111,14 @@ class CartController extends Controller
             'success' => true,
             'message' => $menu->name . ' ditambahkan ke keranjang',
             'cart_count' => count($cart),
+            'menu_id' => $menu->id,
+            'menu' => [
+                'id' => $menu->id,
+                'name' => $menu->name,
+                'price' => $menu->price,
+                'image' => $menu->image,
+                'category' => $menu->category->name ?? null,
+            ],
         ]);
     }
 

@@ -11,6 +11,7 @@ class SettingController extends Controller
     public function index()
     {
         $settings = Setting::all()->pluck('setting_value', 'setting_key');
+
         return view('admin.settings.index', compact('settings'));
     }
 
@@ -24,9 +25,13 @@ class SettingController extends Controller
             'location' => 'required|max:255',
             'contact_latitude' => 'required|numeric',
             'contact_longitude' => 'required|numeric',
+            'chat_enabled' => 'nullable',
         ]);
 
         foreach ($validated as $key => $value) {
+            if ($key === 'chat_enabled') {
+                $value = $request->has('chat_enabled') ? '1' : '0';
+            }
             Setting::set($key, $value);
         }
 

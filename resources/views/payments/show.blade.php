@@ -26,10 +26,10 @@
             
             <div class="space-y-3 mb-6">
                 @forelse($paymentMethods as $method)
-                    <label class="block cursor-pointer">
+                    <label class="block cursor-pointer payment-label">
                         <input type="radio" name="payment_method_id" value="{{ $method->id }}" 
-                               class="peer sr-only" required>
-                        <div class="bg-white border-2 border-gray-200 peer-checked:border-yellow-500 peer-checked:bg-yellow-50 rounded-xl p-4 transition">
+                               class="sr-only" required>
+                        <div class="method-wrapper bg-white border-2 border-gray-200 rounded-xl p-4 transition">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -40,8 +40,8 @@
                                         <p class="text-xs text-gray-500">{{ $method->typeLabel }}</p>
                                     </div>
                                 </div>
-                                <div class="w-6 h-6 rounded-full border-2 peer-checked:border-yellow-500 peer-checked:bg-yellow-500 border-gray-300 flex items-center justify-center transition-all">
-                                    <svg class="w-4 h-4 text-white hidden peer-checked:block" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="method-circle w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all">
+                                    <svg class="method-icon w-4 h-4 text-white hidden" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                     </svg>
                                 </div>
@@ -69,16 +69,37 @@
 document.querySelectorAll('input[type="radio"][name="payment_method_id"]').forEach(radio => {
     radio.addEventListener('change', function() {
         // Remove all checked styles
-        document.querySelectorAll('input[type="radio"][name="payment_method_id"]').forEach(r => {
-            const parent = r.closest('label').querySelector('div');
-            parent.classList.remove('border-yellow-500', 'bg-yellow-50');
-            parent.classList.add('border-gray-200', 'bg-white');
+        document.querySelectorAll('.payment-label').forEach(label => {
+            const wrapper = label.querySelector('.method-wrapper');
+            const circle = label.querySelector('.method-circle');
+            const icon = label.querySelector('.method-icon');
+            
+            wrapper.classList.remove('border-yellow-500', 'bg-yellow-50');
+            wrapper.classList.add('border-gray-200', 'bg-white');
+            
+            circle.classList.remove('border-yellow-500', 'bg-yellow-500');
+            circle.classList.add('border-gray-300');
+            
+            icon.classList.add('hidden');
+            icon.classList.remove('block');
         });
         
         // Add checked style to selected
-        const parent = this.closest('label').querySelector('div');
-        parent.classList.remove('border-gray-200', 'bg-white');
-        parent.classList.add('border-yellow-500', 'bg-yellow-50');
+        if (this.checked) {
+            const label = this.closest('.payment-label');
+            const wrapper = label.querySelector('.method-wrapper');
+            const circle = label.querySelector('.method-circle');
+            const icon = label.querySelector('.method-icon');
+            
+            wrapper.classList.remove('border-gray-200', 'bg-white');
+            wrapper.classList.add('border-yellow-500', 'bg-yellow-50');
+            
+            circle.classList.remove('border-gray-300');
+            circle.classList.add('border-yellow-500', 'bg-yellow-500');
+            
+            icon.classList.remove('hidden');
+            icon.classList.add('block');
+        }
     });
 });
 </script>

@@ -156,9 +156,9 @@
                             </div>
                         </div>
 
-                        <a href="{{ route('orders.checkout') }}"
-                           class="block w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold text-center py-3.5 rounded-xl transition shadow-sm shadow-yellow-600/30 mb-3">
-                            Lanjut ke Checkout →
+
+                        <a href="{{ route('orders.checkout') }}" class="block w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold text-center py-4 rounded-xl transition shadow-md hover:shadow-lg mb-3">
+                            Checkout Sekarang
                         </a>
 
                         <a href="{{ route('menu.index') }}" class="block w-full text-center text-sm text-gray-500 hover:text-yellow-700 py-2 transition">
@@ -178,7 +178,7 @@
                     </div>
 
                     {{-- Promo banner --}}
-                    <div class="mt-4 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl p-4 text-white">
+                    <div class="mt-4 bg-yellow-500 rounded-2xl p-4 text-white">
                         <p class="text-xs font-bold uppercase tracking-wider opacity-80 mb-1">Info Pengiriman</p>
                         <p class="font-bold text-sm">Gratis ongkir untuk pickup!</p>
                         <p class="text-xs opacity-80 mt-0.5">Delivery +Rp 10.000 ke wilayah Bandung</p>

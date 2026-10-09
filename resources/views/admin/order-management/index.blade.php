@@ -3,7 +3,19 @@
 @section('header', 'Kelola Pesanan & Pembayaran')
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6" x-data="orderManagement()" x-init="init()">
+    {{-- Auto-refresh indicator --}}
+    <div x-show="autoRefreshEnabled" 
+         x-transition
+         class="bg-blue-50 border border-blue-200 text-blue-700 rounded-lg px-4 py-2 text-sm flex items-center justify-between">
+        <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            Auto-refresh aktif
+        </span>
+        <button @click="autoRefreshEnabled = false" class="text-blue-600 hover:text-blue-800 text-xs underline">Nonaktifkan</button>
+    </div>
     {{-- Filter Section --}}
     <div class="bg-white rounded-lg shadow p-4">
         <form method="GET" class="flex flex-wrap gap-4 items-end">
@@ -22,6 +34,7 @@
                     <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
                     <option value="preparing" {{ request('status') === 'preparing' ? 'selected' : '' }}>Diproses</option>
                     <option value="ready" {{ request('status') === 'ready' ? 'selected' : '' }}>Siap</option>
+                    <option value="in_transit" {{ request('status') === 'in_transit' ? 'selected' : '' }}>Dalam Perjalanan</option>
                     <option value="delivered" {{ request('status') === 'delivered' ? 'selected' : '' }}>Selesai</option>
                     <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
                 </select>
@@ -80,7 +93,7 @@
                     @forelse($orders as $order)
                     <tr class="hover:bg-gray-50" id="order-{{ $order->id }}" data-proof-image="{{ $order->payment && $order->payment->proof_image ? asset('storage/' . $order->payment->proof_image) : '' }}">
                         <td class="px-4 py-3">
-                            <div class="font-medium text-gray-900">{{ $order->order_number }}</div>
+                            <a href="{{ route('admin.order-management.show', $order) }}" class="font-medium text-gray-900 hover:text-yellow-700 transition">{{ $order->order_number }}</a>
                             <div class="text-xs text-gray-500">{{ $order->created_at->format('d/m/Y H:i') }}</div>
                         </td>
                         <td class="px-4 py-3">
@@ -101,7 +114,7 @@
                             </div>
                         </td>
                         <td class="px-4 py-3">
-                            <div class="font-semibold text-gray-900">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</div>
+                            <div class="font-semibold text-gray-900">Rp {{ number_format($order->total, 0, ',', '.') }}</div>
                         </td>
                         <td class="px-4 py-3">
                             <form action="{{ route('admin.order-management.update-status', $order) }}" method="POST" class="inline">
@@ -113,6 +126,7 @@
                                     <option value="confirmed" {{ $order->status === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
                                     <option value="preparing" {{ $order->status === 'preparing' ? 'selected' : '' }}>Diproses</option>
                                     <option value="ready" {{ $order->status === 'ready' ? 'selected' : '' }}>Siap</option>
+                                    <option value="in_transit" {{ $order->status === 'in_transit' ? 'selected' : '' }}>Dalam Perjalanan</option>
                                     <option value="delivered" {{ $order->status === 'delivered' ? 'selected' : '' }}>Selesai</option>
                                     <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
                                 </select>
@@ -318,5 +332,54 @@ document.getElementById('rejectForm').addEventListener('submit', function(e) {
         alert('Terjadi kesalahan');
     });
 });
+
+function orderManagement() {
+    return {
+        autoRefreshEnabled: true,
+        newOrders: [],
+        refreshTimer: null,
+
+        init() {
+            this.startAutoRefresh();
+        },
+
+        startAutoRefresh() {
+            this.refreshTimer = setInterval(() => {
+                if (this.autoRefreshEnabled) this.refresh();
+            }, 30000);
+        },
+
+        async refresh() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const response = await fetch(`{{ route("admin.order-management.index") }}?${params.toString()}`, {
+                    headers: {
+                        "Accept": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    const currentIds = @json($orders->pluck("id"));
+                    const fetchedIds = data.orders.map(o => o.id);
+                    const hasNew = fetchedIds.some(id => !currentIds.includes(id));
+
+                    if (hasNew) {
+                        const banner = document.createElement("div");
+                        banner.className = "fixed top-4 right-4 bg-green-600 text-white px-6 py-4 rounded-lg shadow-lg z-50";
+                        banner.innerHTML = `<div class="flex items-center gap-3">
+                            <span>${data.orders.filter(o => !currentIds.includes(o.id)).length} pesanan baru!</span>
+                            <button onclick="window.location.reload()" class="bg-white text-green-600 px-3 py-1 rounded text-sm font-medium">Lihat</button>
+                        </div>`;
+                        document.body.appendChild(banner);
+                        setTimeout(() => banner.remove(), 8000);
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to refresh orders:", e);
+            }
+        }
+    };
+}
 </script>
 @endsection

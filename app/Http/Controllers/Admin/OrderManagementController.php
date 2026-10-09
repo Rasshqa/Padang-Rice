@@ -18,20 +18,35 @@ class OrderManagementController extends Controller
         }
 
         if ($request->filled('payment_status') && $request->payment_status !== 'semua') {
-            $query->whereHas('payment', function($q) use ($request) {
+            $query->whereHas('payment', function ($q) use ($request) {
                 $q->where('status', $request->payment_status);
             });
         }
 
         if ($request->filled('search')) {
-            $query->where(function($q) use ($request) {
-                $q->where('order_number', 'like', '%' . $request->search . '%')
-                  ->orWhere('customer_name', 'like', '%' . $request->search . '%')
-                  ->orWhere('customer_phone', 'like', '%' . $request->search . '%');
+            $query->where(function ($q) use ($request) {
+                $q->where('order_number', 'like', '%'.$request->search.'%')
+                    ->orWhere('customer_name', 'like', '%'.$request->search.'%')
+                    ->orWhere('customer_phone', 'like', '%'.$request->search.'%');
             });
         }
 
         $orders = $query->latest()->paginate(20);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'orders' => $orders->map(fn ($order) => [
+                    'id' => $order->id,
+                    'order_number' => $order->order_number,
+                    'customer_name' => $order->customer_name,
+                    'total' => $order->total,
+                    'status' => $order->status,
+                    'payment_status' => $order->payment?->status,
+                    'created_at' => $order->created_at,
+                ]),
+            ]);
+        }
 
         return view('admin.order-management.index', compact('orders'));
     }
@@ -39,7 +54,7 @@ class OrderManagementController extends Controller
     public function updateOrderStatus(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'status' => 'required|in:pending,confirmed,preparing,ready,delivered,cancelled',
+            'status' => 'required|in:pending,confirmed,preparing,ready,in_transit,delivered,completed,cancelled',
         ]);
 
         $order->update(['status' => $validated['status']]);
@@ -82,5 +97,12 @@ class OrderManagementController extends Controller
         ]);
 
         return response()->json(['success' => true, 'message' => 'Pembayaran berhasil ditolak']);
+    }
+
+    public function show(Order $order)
+    {
+        $order->load(['items.menu', 'payment.paymentMethod', 'user']);
+
+        return view('admin.order-management.show', compact('order'));
     }
 }

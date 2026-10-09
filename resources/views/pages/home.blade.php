@@ -6,7 +6,7 @@
 {{-- Hero Section --}}
 <section class="relative min-h-screen flex items-center bg-[#f9f9f9] overflow-hidden pt-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div class="max-w-xl">
+        <div class="max-w-xl lg:max-w-2xl">
             <div class="w-16 h-0.5 bg-black mb-6"></div>
             <h1 class="text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-6 font-normal tracking-wide">
                 CITA RASA NUSANTARA<br>
@@ -19,7 +19,7 @@
         </div>
     </div>
     
-    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[15%] w-[400px] sm:w-[500px] md:w-[700px] lg:w-[900px] xl:w-[1000px] pointer-events-none z-0">
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[15%] w-[280px] sm:w-[350px] md:w-[500px] lg:w-[700px] xl:w-[850px] pointer-events-none z-0 opacity-40 md:opacity-60 lg:opacity-80">
         <img src="{{ asset('assets/UI/naspad.png') }}" alt="Padang Rice Hero" class="w-full h-auto object-contain drop-shadow-2xl">
     </div>
 </section>

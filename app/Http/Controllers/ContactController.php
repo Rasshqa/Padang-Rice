@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
+use App\Models\ContactMessage;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
     public function index()
     {
-        $latitude = \App\Models\Setting::get('contact_latitude', -6.9175);
-        $longitude = \App\Models\Setting::get('contact_longitude', 107.6191);
+        $latitude = Setting::get('contact_latitude', -6.9175);
+        $longitude = Setting::get('contact_longitude', 107.6191);
+
         return view('pages.contact', compact('latitude', 'longitude'));
     }
 
@@ -23,7 +25,7 @@ class ContactController extends Controller
             'message' => 'required',
         ]);
 
-        Message::create($validated);
+        ContactMessage::create($validated);
 
         return back()->with('success', 'Pesan Anda berhasil terkirim!');
     }

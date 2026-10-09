@@ -23,7 +23,7 @@
                 </a>
             </div>
         @else
-            <div class="bg-white rounded-xl shadow overflow-hidden">
+            <div class="bg-white rounded-xl shadow overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-gray-50">
                         <tr>

@@ -27,19 +27,14 @@ $navLinks = [
                         {{ $link['label'] }}
                     </a>
                 @endforeach
-                <a href="{{ route('cart.index') }}" class="relative {{ $transparent ?? false ? 'text-white' : 'text-gray-900' }}">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                    @if(session('cart') && count(session('cart')) > 0)
-                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ count(session('cart')) }}</span>
-                    @endif
-                </a>
                 @auth
                     <a href="{{ route('profile.show') }}" class="text-xs font-semibold tracking-widest uppercase {{ $transparent ?? false ? 'text-white' : 'text-gray-900' }} opacity-70 hover:opacity-100">
                         PROFIL
                     </a>
+                    <span class="mx-2"></span>
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
-                        <button type="submit" class="text-xs font-semibold tracking-widest uppercase {{ $transparent ?? false ? 'text-white' : 'text-gray-900' }} opacity-70 hover:opacity-100">
+                        <button type="submit" class="text-xs font-semibold tracking-widest uppercase {{ $transparent ?? false ? 'bg-white/20 text-white border-white' : 'bg-gray-900 text-white border-gray-900' }} px-4 py-2 rounded-lg hover:opacity-90 transition border">
                             LOGOUT
                         </button>
                     </form>
@@ -74,7 +69,7 @@ $navLinks = [
                 </a>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="block w-full text-left py-2 text-sm font-semibold tracking-wider uppercase text-gray-900 hover:text-brand">
+                    <button type="submit" class="block w-full text-center py-2 text-sm font-semibold tracking-wider uppercase bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition mt-2">
                         LOGOUT
                     </button>
                 </form>

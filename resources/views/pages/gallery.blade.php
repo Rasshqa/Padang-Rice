@@ -51,9 +51,7 @@
     <button class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300" onclick="closeLightbox()">&times;</button>
     <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full object-contain" onclick="event.stopPropagation()">
 </div>
-@endsection
 
-@section('scripts')
 <script>
 let currentSlide = 0;
 const slides = document.querySelectorAll('.carousel-item');

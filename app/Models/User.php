@@ -35,6 +35,11 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class);
+    }
+
     public function isCustomer()
     {
         return $this->role === 'customer';

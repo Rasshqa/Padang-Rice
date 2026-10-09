@@ -15,7 +15,7 @@
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div class="bg-gradient-to-r from-yellow-600 to-yellow-700 p-6 text-white">
+            <div class="bg-yellow-600 p-6 text-white">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm opacity-90 mb-1">Nomor Pesanan</p>
@@ -57,7 +57,7 @@
 
                 <div class="mb-8">
                     <h3 class="text-sm font-semibold text-gray-600 mb-4">DETAIL PESANAN</h3>
-                    <div class="border rounded-xl overflow-hidden">
+                    <div class="border rounded-xl overflow-x-auto">
                         <table class="w-full">
                             <thead class="bg-gray-50">
                                 <tr>

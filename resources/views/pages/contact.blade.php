@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Kontak Kami - Padang Rice')
+@section('title', 'Kontak Kami – Padang Rice')
+
+@section('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    #contact-map { z-index: 1; }
+    .leaflet-popup-content-wrapper { border-radius: 8px; }
+    .leaflet-popup-content { margin: 12px 16px; }
+</style>
+@endsection
 
 @section('content')
 <x-hero title="KONTAK KAMI" />
@@ -18,7 +27,6 @@
         <form action="{{ route('contact.store') }}" method="POST" class="mb-16">
             @csrf
             <div class="flex flex-col lg:flex-row gap-6 mb-6">
-                <!-- Left column -->
                 <div class="flex-1 space-y-4">
                     <div>
                         <input type="text" name="subject" placeholder="Subject" 
@@ -46,7 +54,6 @@
                     </div>
                 </div>
 
-                <!-- Right column -->
                 <div class="flex-1">
                     <textarea name="message" placeholder="Message" 
                               class="w-full h-full min-h-[200px] px-5 py-4 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors resize-none @error('message') border-red-500 @enderror"
@@ -85,13 +92,60 @@
                 <p class="text-sm text-gray-600">Kota Bandung, Jawa Barat</p>
             </div>
         </div>
+
+        {{-- Interactive Map Section --}}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-gray-50 rounded-xl p-6 lg:p-8">
+                <h3 class="font-display font-bold uppercase text-xl mb-4">LOKASI KAMI</h3>
+                
+                <div class="mb-6">
+                    <p class="font-bold text-lg text-gray-900 mb-2">{{ config('restaurant.name') }}</p>
+                    <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{{ config('restaurant.address') }}</p>
+                </div>
+
+                <a href="https://www.google.com/maps/dir/?api=1&destination={{ $latitude }},{{ $longitude }}" 
+                   target="_blank" 
+                   rel="noopener"
+                   class="inline-flex items-center gap-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-3 rounded-lg transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    Petunjuk Arah
+                </a>
+            </div>
+
+            <div id="contact-map" 
+                 class="h-[350px] lg:h-[500px] rounded-xl overflow-hidden border border-gray-200"
+                 data-lat="{{ $latitude }}"
+                 data-lng="{{ $longitude }}"
+                 data-name="{{ config('restaurant.name') }}"
+                 data-address="{{ config('restaurant.address') }}">
+            </div>
+        </div>
     </div>
 </section>
 
-<section class="pb-0">
-    <div class="w-full h-96 bg-gray-200">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15864.0!2d{{ $longitude }}!3d{{ $latitude }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwNTUnMDEuNSJTIDEwN8KwMzcnMDguOCJF!5e0!3m2!1sen!2sid!4v1234567890" 
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-    </div>
-</section>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mapEl = document.getElementById('contact-map');
+    if (!mapEl) return;
+
+    const lat = parseFloat(mapEl.dataset.lat);
+    const lng = parseFloat(mapEl.dataset.lng);
+    const name = mapEl.dataset.name;
+    const address = mapEl.dataset.address;
+
+    const map = L.map('contact-map').setView([lat, lng], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+    }).addTo(map);
+
+    const marker = L.marker([lat, lng]).addTo(map);
+    marker.bindPopup('<strong>' + name + '</strong><br>' + address).openPopup();
+});
+</script>
 @endsection

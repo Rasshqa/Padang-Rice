@@ -5,17 +5,25 @@
 @section('content')
 <div class="min-h-screen bg-gray-50 py-8 px-4">
     <div class="max-w-4xl mx-auto">
-        <div class="mb-6">
+        <div class="mb-6 flex items-center">
             <a href="{{ route('orders.history') }}" class="text-gray-600 hover:text-gray-800 flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
                 Kembali ke Riwayat
             </a>
+            @auth
+            <button onclick="openChat({{ $order->id }})" class="ml-auto px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+                Chat dengan Admin
+            </button>
+            @endauth
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div class="bg-gradient-to-r from-yellow-600 to-yellow-700 p-6 text-white">
+            <div class="bg-yellow-600 p-6 text-white">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm opacity-90 mb-1">Nomor Pesanan</p>
@@ -52,7 +60,7 @@
 
                 <div class="mb-8">
                     <h3 class="text-sm font-semibold text-gray-600 mb-4">DETAIL PESANAN</h3>
-                    <div class="border rounded-xl overflow-hidden">
+                    <div class="border rounded-xl overflow-x-auto">
                         <table class="w-full">
                             <thead class="bg-gray-50">
                                 <tr>
@@ -100,6 +108,30 @@
                     </div>
                 @endif
 
+                @if($order->delivery_method === 'delivery' && $order->latitude && $order->longitude)
+                <div class="mt-8">
+                    <h3 class="text-sm font-semibold text-gray-600 mb-4">LOKASI PENGIRIMAN</h3>
+                    <div id="tracking-map" class="w-full h-72 rounded-xl border"></div>
+                    <div class="mt-3 text-sm text-gray-600">
+                        <p><strong>Alamat:</strong> {{ $order->delivery_address }}</p>
+                    </div>
+                </div>
+                @endif
+
+                @if($order->status === 'delivered')
+                    <div class="mt-8 p-6 bg-orange-50 border border-orange-200 rounded-xl text-center">
+                        <h3 class="font-bold text-orange-900 mb-2">Konfirmasi Pesanan Diterima</h3>
+                        <p class="text-orange-800 text-sm mb-4">Pastikan pesanan Anda telah benar-benar sampai atau diterima dengan baik sebelum menekan tombol ini.</p>
+                        <form action="{{ route('orders.complete', $order) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin pesanan sudah diterima dengan baik?')">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-xl transition">
+                                Pesanan Sudah Diterima
+                            </button>
+                        </form>
+                    </div>
+                @endif
+
                 @if($order->payment)
                     <div class="mt-8 p-6 {{ $order->payment->status === 'paid' ? 'bg-green-50' : ($order->payment->status === 'rejected' ? 'bg-red-50' : 'bg-yellow-50') }} rounded-xl">
                         <div class="flex items-center justify-between mb-3">
@@ -141,4 +173,64 @@
         </div>
     </div>
 </div>
+@if($order->delivery_method === 'delivery' && $order->latitude && $order->longitude)
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const RESTAURANT_LAT = {{ (float) config('restaurant.latitude') }};
+    const RESTAURANT_LNG = {{ (float) config('restaurant.longitude') }};
+    const DELIVERY_LAT = {{ $order->latitude }};
+    const DELIVERY_LNG = {{ $order->longitude }};
+
+    const map = L.map('tracking-map').setView([RESTAURANT_LAT, RESTAURANT_LNG], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+    }).addTo(map);
+
+    // Restaurant marker
+    const restaurantIcon = L.divIcon({
+        html: `<div style="background:#dc2626;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);">
+                  <svg style="width:20px;height:20px;color:white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+               </div>`,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+    });
+    
+    L.marker([RESTAURANT_LAT, RESTAURANT_LNG], { icon: restaurantIcon })
+        .addTo(map)
+        .bindPopup('<div style="text-align:center;"><strong>{{ config('restaurant.name') }}</strong><br><small>Restoran</small></div>');
+
+    // Delivery marker
+    const deliveryIcon = L.divIcon({
+        html: `<div style="background:#eab308;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);">
+                  <svg style="width:20px;height:20px;color:white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+               </div>`,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+    });
+    
+    L.marker([DELIVERY_LAT, DELIVERY_LNG], { icon: deliveryIcon })
+        .addTo(map)
+        .bindPopup('<div style="text-align:center;"><strong>Lokasi Anda</strong></div>');
+
+    // Draw line
+    L.polyline([
+        [RESTAURANT_LAT, RESTAURANT_LNG],
+        [DELIVERY_LAT, DELIVERY_LNG]
+    ], {
+        color: '#eab308',
+        weight: 3,
+        opacity: 0.7,
+        dashArray: '10, 10'
+    }).addTo(map);
+
+    map.fitBounds([
+        [RESTAURANT_LAT, RESTAURANT_LNG],
+        [DELIVERY_LAT, DELIVERY_LNG]
+    ], { padding: [50, 50] });
+});
+</script>
+@endif
 @endsection
