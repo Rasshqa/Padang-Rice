@@ -14,7 +14,7 @@
         <!-- Sidebar -->
         <aside class="hidden lg:flex lg:flex-shrink-0">
             <div class="flex flex-col w-64 bg-white border-r border-gray-200">
-                <div class="flex items-center justify-center h-16 px-4 bg-yellow-600">
+                <div class="flex items-center justify-center h-16 px-4 bg-gray-900">
                     <span class="text-lg font-bold text-white">PADANG RICE</span>
                 </div>
                 <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
