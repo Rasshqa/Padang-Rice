@@ -26,7 +26,7 @@
                 </div>
                 <div class="flex justify-between">
                     <span class="text-gray-600">Total</span>
-                    <span class="font-bold text-xl text-yellow-600">{{ $order->formattedTotal }}</span>
+                    <span class="font-bold text-xl text-gray-900">{{ $order->formattedTotal }}</span>
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
                 <div class="mb-5">
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Bukti Pembayaran</label>
                     <input type="file" name="proof_image" accept="image/jpeg,image/jpg,image/png,image/webp" required
-                           class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500">
+                           class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900">
                     <p class="text-xs text-gray-500 mt-1">Format: JPG, JPEG, PNG, WEBP. Max: 5MB</p>
                     @error('proof_image') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
@@ -76,12 +76,12 @@
                 <div class="mb-6">
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Catatan (Opsional)</label>
                     <textarea name="user_notes" rows="2" 
-                              class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500"
+                              class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900"
                               placeholder="Contoh: Sudah transfer dari rekening BCA atas nama ...">{{ old('user_notes') }}</textarea>
                     @error('user_notes') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
 
-                <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 rounded-xl transition">
+                <button type="submit" class="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-4 rounded-xl transition">
                     Kirim Bukti Pembayaran
                 </button>
             </form>

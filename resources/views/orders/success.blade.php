@@ -39,7 +39,7 @@
 
             <div class="space-y-3">
                 <a href="{{ route('payments.show', $order) }}" 
-                   class="block w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-xl transition">
+                   class="block w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition">
                     Pilih Metode Pembayaran
                 </a>
                 <a href="{{ route('menu.index') }}" 

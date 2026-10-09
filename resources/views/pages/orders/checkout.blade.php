@@ -60,7 +60,7 @@
                             <label class="block text-sm font-medium mb-2">Cari Alamat</label>
                             <div class="flex gap-2">
                                 <input type="text" id="address_search" placeholder="Ketik nama jalan, gedung, atau tempat..." class="flex-1 px-4 py-2 border rounded">
-                                <button type="button" id="search_btn" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-sm font-semibold whitespace-nowrap">
+                                <button type="button" id="search_btn" class="px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded-lg text-sm font-semibold whitespace-nowrap">
                                     Cari
                                 </button>
                             </div>

@@ -35,7 +35,7 @@
             </div>
 
             <div class="mt-8 pt-8 border-t border-gray-200">
-                <a href="{{ route('profile.edit') }}" class="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-bold px-8 py-3 rounded-xl transition">
+                <a href="{{ route('profile.edit') }}" class="inline-block bg-gray-900 hover:bg-gray-800 text-white font-bold px-8 py-3 rounded-xl transition">
                     Edit Profil
                 </a>
             </div>

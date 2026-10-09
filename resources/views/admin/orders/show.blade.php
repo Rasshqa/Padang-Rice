@@ -15,7 +15,7 @@
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div class="bg-yellow-600 p-6 text-white">
+            <div class="bg-gray-900 p-6 text-white">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm opacity-90 mb-1">Nomor Pesanan</p>
@@ -99,7 +99,7 @@
                 </div>
 
                 @if($order->notes)
-                    <div class="mb-8 p-4 bg-yellow-50 rounded-xl">
+                    <div class="mb-8 p-4 bg-gray-50 rounded-xl">
                         <p class="text-sm font-semibold text-gray-600 mb-1">Catatan:</p>
                         <p class="text-gray-800">{{ $order->notes }}</p>
                     </div>
@@ -131,7 +131,7 @@
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="status" value="preparing">
-                                    <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-4 py-2 rounded-lg transition">
+                                    <button type="submit" class="bg-gray-900 hover:bg-gray-800 text-white font-semibold px-4 py-2 rounded-lg transition">
                                         Proses
                                     </button>
                                 </form>

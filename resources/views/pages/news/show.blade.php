@@ -41,7 +41,7 @@
                 </div>
                 <div class="p-4">
                     <h3 class="font-display font-bold text-sm uppercase mb-2 line-clamp-2">{{ $item->title }}</h3>
-                    <a href="{{ route('news.show', $item->slug) }}" class="text-xs font-bold text-yellow-500 hover:text-yellow-600 uppercase tracking-wider">
+                    <a href="{{ route('news.show', $item->slug) }}" class="text-xs font-bold text-yellow-500 hover:text-gray-900 uppercase tracking-wider">
                         Baca selengkapnya
                     </a>
                 </div>

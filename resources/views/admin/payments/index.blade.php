@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-6">
     <form method="GET" class="flex flex-col sm:flex-row gap-4">
-        <select name="status" class="rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500">
+        <select name="status" class="rounded-lg border-gray-300 focus:ring-gray-900 focus:border-gray-500">
             <option value="semua" {{ request('status') === 'semua' ? 'selected' : '' }}>Semua Status</option>
             <option value="unpaid" {{ request('status') === 'unpaid' ? 'selected' : '' }}>Belum Dibayar</option>
             <option value="waiting_verification" {{ request('status') === 'waiting_verification' ? 'selected' : '' }}>Menunggu Verifikasi</option>
@@ -13,8 +13,8 @@
             <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Ditolak</option>
         </select>
         <input type="text" name="search" placeholder="Cari nomor pesanan..." value="{{ request('search') }}"
-               class="rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500">
-        <button type="submit" class="px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
+               class="rounded-lg border-gray-300 focus:ring-gray-900 focus:border-gray-500">
+        <button type="submit" class="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800">
             Filter
         </button>
         @if(request()->hasAny(['status', 'search']))
@@ -76,7 +76,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                         <a href="{{ route('admin.payments.show', $payment) }}" 
-                           class="text-yellow-600 hover:text-yellow-900 font-medium">
+                           class="text-gray-900 hover:text-gray-900 font-medium">
                             Detail
                         </a>
                     </td>

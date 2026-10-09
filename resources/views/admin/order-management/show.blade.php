@@ -82,7 +82,7 @@
                         <span class="text-gray-600">Ongkir</span>
                         <span class="font-semibold">Rp {{ number_format($order->delivery_fee, 0, ',', '.') }}</span>
                     </div>
-                    <div class="flex justify-between text-lg font-bold text-yellow-700 pt-2 border-t">
+                    <div class="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t">
                         <span>Total</span>
                         <span>Rp {{ number_format($order->total, 0, ',', '.') }}</span>
                     </div>
@@ -142,7 +142,7 @@
                                 @if($order->payment->status === 'paid')
                                     <span class="text-green-600">Lunas</span>
                                 @elseif($order->payment->status === 'waiting_verification')
-                                    <span class="text-yellow-600">Menunggu Verifikasi</span>
+                                    <span class="text-gray-900">Menunggu Verifikasi</span>
                                 @elseif($order->payment->status === 'rejected')
                                     <span class="text-red-600">Ditolak</span>
                                 @else

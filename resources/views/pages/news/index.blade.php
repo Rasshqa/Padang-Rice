@@ -47,7 +47,7 @@
                         {{ Str::limit(strip_tags($item->content), 100) }}
                     </p>
                     <div class="flex items-center justify-between">
-                        <a href="{{ route('news.show', $item->slug) }}" class="text-xs font-bold text-yellow-500 hover:text-yellow-600 uppercase tracking-wider">
+                        <a href="{{ route('news.show', $item->slug) }}" class="text-xs font-bold text-yellow-500 hover:text-gray-900 uppercase tracking-wider">
                             Baca selengkapnya
                         </a>
                         <span class="text-gray-400 text-xs">...</span>

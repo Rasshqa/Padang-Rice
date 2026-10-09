@@ -13,7 +13,7 @@
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
             <div class="text-center mb-6">
                 <div class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center
-                    {{ $order->payment->status === 'paid' ? 'bg-green-100' : ($order->payment->status === 'rejected' ? 'bg-red-100' : 'bg-yellow-100') }}">
+                    {{ $order->payment->status === 'paid' ? 'bg-green-100' : ($order->payment->status === 'rejected' ? 'bg-red-100' : 'bg-gray-100') }}">
                     @if($order->payment->status === 'paid')
                         <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -23,7 +23,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     @else
-                        <svg class="w-10 h-10 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-10 h-10 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     @endif
@@ -75,7 +75,7 @@
 
         <div class="space-y-3">
             <a href="{{ route('orders.show', $order) }}" 
-               class="block w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-xl text-center transition">
+               class="block w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl text-center transition">
                 Lihat Detail Pesanan
             </a>
             

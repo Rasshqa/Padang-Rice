@@ -34,12 +34,12 @@
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Menu</label>
                     <input type="text" name="name" value="{{ old('name', $menu->name) }}" required
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Kategori</label>
-                    <select name="category" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                    <select name="category" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                         @foreach($categories as $value => $label)
                             <option value="{{ $value }}" {{ old('category', $menu->category) === $value ? 'selected' : '' }}>{{ $label }}</option>
                         @endforeach
@@ -48,13 +48,13 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi</label>
-                    <textarea name="description" rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent">{{ old('description', $menu->description) }}</textarea>
+                    <textarea name="description" rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-gray-900 focus:border-transparent">{{ old('description', $menu->description) }}</textarea>
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Harga (Rp)</label>
                     <input type="number" name="price" value="{{ old('price', $menu->price) }}" required min="0" step="500"
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                 </div>
 
                 <div>
@@ -63,14 +63,14 @@
                         <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}" class="w-32 h-32 rounded-lg object-cover mb-2">
                     @endif
                     <input type="file" name="image" accept="image/*"
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-gray-900 focus:border-transparent">
                     <p class="text-sm text-gray-500 mt-1">Biarkan kosong jika tidak ingin mengubah gambar.</p>
                 </div>
 
                 <div>
                     <label class="flex items-center gap-2">
                         <input type="checkbox" name="available" value="1" {{ old('available', $menu->available) ? 'checked' : '' }}
-                               class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500">
+                               class="rounded border-gray-300 text-gray-900 focus:ring-gray-900">
                         <span class="text-sm font-semibold text-gray-700">Tersedia</span>
                     </label>
                 </div>

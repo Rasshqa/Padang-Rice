@@ -23,7 +23,7 @@
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div class="bg-yellow-600 p-6 text-white">
+            <div class="bg-gray-900 p-6 text-white">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm opacity-90 mb-1">Nomor Pesanan</p>
@@ -102,7 +102,7 @@
                 </div>
 
                 @if($order->notes)
-                    <div class="mt-6 p-4 bg-yellow-50 rounded-xl">
+                    <div class="mt-6 p-4 bg-gray-50 rounded-xl">
                         <p class="text-sm font-semibold text-gray-600 mb-1">Catatan:</p>
                         <p class="text-gray-800">{{ $order->notes }}</p>
                     </div>
@@ -133,7 +133,7 @@
                 @endif
 
                 @if($order->payment)
-                    <div class="mt-8 p-6 {{ $order->payment->status === 'paid' ? 'bg-green-50' : ($order->payment->status === 'rejected' ? 'bg-red-50' : 'bg-yellow-50') }} rounded-xl">
+                    <div class="mt-8 p-6 {{ $order->payment->status === 'paid' ? 'bg-green-50' : ($order->payment->status === 'rejected' ? 'bg-red-50' : 'bg-gray-50') }} rounded-xl">
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="font-bold text-gray-900">Status Pembayaran</h3>
                             <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $order->payment->statusColor }}">
@@ -144,7 +144,7 @@
                         
                         @if($order->payment->status === 'unpaid')
                             <a href="{{ route('payments.upload', $order) }}" 
-                               class="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-2 rounded-lg transition">
+                               class="inline-block bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-2 rounded-lg transition">
                                 Upload Bukti Pembayaran
                             </a>
                         @elseif($order->payment->status === 'waiting_verification')
@@ -152,7 +152,7 @@
                         @elseif($order->payment->status === 'rejected')
                             <p class="text-sm text-red-700 mb-3">{{ $order->payment->rejection_reason }}</p>
                             <a href="{{ route('payments.upload', $order) }}" 
-                               class="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-2 rounded-lg transition">
+                               class="inline-block bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-2 rounded-lg transition">
                                 Upload Ulang Bukti
                             </a>
                         @elseif($order->payment->status === 'paid')
@@ -164,7 +164,7 @@
                         <h3 class="font-bold text-blue-900 mb-2">Belum Ada Pembayaran</h3>
                         <p class="text-blue-800 mb-4">Silakan pilih metode pembayaran untuk melanjutkan:</p>
                         <a href="{{ route('payments.show', $order) }}" 
-                           class="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-3 rounded-lg transition">
+                           class="inline-block bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-lg transition">
                             Pilih Metode Pembayaran
                         </a>
                     </div>

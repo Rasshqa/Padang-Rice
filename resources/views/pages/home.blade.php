@@ -82,7 +82,7 @@
                 <p class="text-sm text-gray-600 leading-relaxed mb-4">
                     {{ Str::limit(strip_tags($latestNews->first()->content), 220) }}
                 </p>
-                <a href="{{ route('news.show', $latestNews->first()->slug) }}" class="text-xs font-bold text-yellow-500 hover:text-yellow-600 uppercase tracking-wider flex items-center gap-1">
+                <a href="{{ route('news.show', $latestNews->first()->slug) }}" class="text-xs font-bold text-yellow-500 hover:text-gray-900 uppercase tracking-wider flex items-center gap-1">
                     Baca selengkapnya <span class="text-lg">...</span>
                 </a>
             </div>
@@ -99,7 +99,7 @@
                     <p class="text-xs text-gray-500 leading-relaxed mb-3 line-clamp-3">
                         {{ Str::limit(strip_tags($news->content), 100) }}
                     </p>
-                    <a href="{{ route('news.show', $news->slug) }}" class="text-xs font-bold text-yellow-500 hover:text-yellow-600 uppercase tracking-wider flex items-center gap-1">
+                    <a href="{{ route('news.show', $news->slug) }}" class="text-xs font-bold text-yellow-500 hover:text-gray-900 uppercase tracking-wider flex items-center gap-1">
                         Baca selengkapnya <span class="text-lg">...</span>
                     </a>
                 </div>

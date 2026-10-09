@@ -18,7 +18,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Nama Lengkap</label>
                     <input type="text" name="name" required autofocus
                            value="{{ old('name') }}"
-                           class="w-full border {{ $errors->has('name') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                           class="w-full border {{ $errors->has('name') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                            placeholder="Nama lengkap Anda">
                     @error('name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
@@ -27,7 +27,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email</label>
                     <input type="email" name="email" required
                            value="{{ old('email') }}"
-                           class="w-full border {{ $errors->has('email') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                           class="w-full border {{ $errors->has('email') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                            placeholder="email@contoh.com">
                     @error('email') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
@@ -36,7 +36,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">No. WhatsApp</label>
                     <input type="text" name="phone" required
                            value="{{ old('phone') }}"
-                           class="w-full border {{ $errors->has('phone') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                           class="w-full border {{ $errors->has('phone') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                            placeholder="08xxxxxxxxxx">
                     @error('phone') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
@@ -45,7 +45,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Password</label>
                     <div class="relative">
                         <input type="password" name="password" id="password" required
-                               class="w-full border {{ $errors->has('password') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 pr-12 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                               class="w-full border {{ $errors->has('password') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 pr-12 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                                placeholder="Minimal 8 karakter">
                         <button type="button" onclick="togglePassword('password', 'toggleIcon')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                             <svg id="toggleIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +61,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Konfirmasi Password</label>
                     <div class="relative">
                         <input type="password" name="password_confirmation" id="password_confirmation" required
-                               class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                               class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                                placeholder="Ketik ulang password">
                         <button type="button" onclick="togglePassword('password_confirmation', 'toggleIconConfirm')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                             <svg id="toggleIconConfirm" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,13 +72,13 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 rounded-xl transition">
+                <button type="submit" class="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 rounded-xl transition">
                     Daftar
                 </button>
 
                 <p class="text-center text-sm text-gray-600 mt-6">
                     Sudah punya akun? 
-                    <a href="{{ route('login') }}" class="text-yellow-600 hover:text-yellow-700 font-semibold">Masuk</a>
+                    <a href="{{ route('login') }}" class="text-gray-900 hover:text-gray-900 font-semibold">Masuk</a>
                 </p>
             </form>
         </div>

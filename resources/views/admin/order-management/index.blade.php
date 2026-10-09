@@ -23,12 +23,12 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">Cari</label>
                 <input type="text" name="search" value="{{ request('search') }}" 
                        placeholder="No. pesanan, nama, telepon..."
-                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500">
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-gray-900">
             </div>
             
             <div class="w-40">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status Pesanan</label>
-                <select name="status" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500">
+                <select name="status" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-gray-900">
                     <option value="semua" {{ request('status') === 'semua' || !request('status') ? 'selected' : '' }}>Semua</option>
                     <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
                     <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
@@ -42,7 +42,7 @@
             
             <div class="w-40">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status Pembayaran</label>
-                <select name="payment_status" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500">
+                <select name="payment_status" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-gray-900">
                     <option value="semua" {{ request('payment_status') === 'semua' || !request('payment_status') ? 'selected' : '' }}>Semua</option>
                     <option value="waiting_verification" {{ request('payment_status') === 'waiting_verification' ? 'selected' : '' }}>Menunggu Verifikasi</option>
                     <option value="paid" {{ request('payment_status') === 'paid' ? 'selected' : '' }}>Lunas</option>
@@ -51,7 +51,7 @@
             </div>
             
             <div class="flex gap-2">
-                <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                <button type="submit" class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium">
                     Filter
                 </button>
                 <a href="{{ route('admin.order-management.index') }}" class="border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium">
@@ -93,7 +93,7 @@
                     @forelse($orders as $order)
                     <tr class="hover:bg-gray-50" id="order-{{ $order->id }}" data-proof-image="{{ $order->payment && $order->payment->proof_image ? asset('storage/' . $order->payment->proof_image) : '' }}">
                         <td class="px-4 py-3">
-                            <a href="{{ route('admin.order-management.show', $order) }}" class="font-medium text-gray-900 hover:text-yellow-700 transition">{{ $order->order_number }}</a>
+                            <a href="{{ route('admin.order-management.show', $order) }}" class="font-medium text-gray-900 hover:text-gray-900 transition">{{ $order->order_number }}</a>
                             <div class="text-xs text-gray-500">{{ $order->created_at->format('d/m/Y H:i') }}</div>
                         </td>
                         <td class="px-4 py-3">
@@ -121,7 +121,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <select name="status" onchange="this.form.submit()" 
-                                        class="text-sm border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-yellow-500 {{ $order->statusColor }}">
+                                        class="text-sm border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-gray-900 {{ $order->statusColor }}">
                                     <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="confirmed" {{ $order->status === 'confirmed' ? 'selected' : '' }}>Dikonfirmasi</option>
                                     <option value="preparing" {{ $order->status === 'preparing' ? 'selected' : '' }}>Diproses</option>
@@ -136,7 +136,7 @@
                             @if($order->payment)
                                 @php
                                     $paymentColors = [
-                                        'waiting_verification' => 'bg-yellow-100 text-yellow-800',
+                                        'waiting_verification' => 'bg-gray-100 text-yellow-800',
                                         'paid' => 'bg-green-100 text-green-800',
                                         'rejected' => 'bg-red-100 text-red-800',
                                     ];

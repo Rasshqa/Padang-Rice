@@ -6,7 +6,7 @@
 
 {{-- Toast --}}
 <div id="toast" class="fixed top-6 right-6 z-[9999] flex items-center gap-3 bg-gray-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl translate-x-[120%] transition-all duration-500 ease-out max-w-xs">
-    <div id="toast-icon" class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center shrink-0">
+    <div id="toast-icon" class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center shrink-0">
         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
     </div>
     <p id="toast-msg" class="text-sm font-medium leading-snug"></p>
@@ -18,7 +18,7 @@
         {{-- Header --}}
         <div class="py-8">
             <nav class="text-xs text-gray-400 mb-2 flex items-center gap-1.5">
-                <a href="{{ route('home') }}" class="hover:text-yellow-600 transition">Home</a>
+                <a href="{{ route('home') }}" class="hover:text-gray-900 transition">Home</a>
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 <span class="text-gray-700 font-medium">Keranjang</span>
             </nav>
@@ -41,14 +41,14 @@
         @if(empty($cartItems))
             {{-- Empty State --}}
             <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-16 text-center">
-                <div class="w-24 h-24 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg class="w-12 h-12 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                 </div>
                 <h2 class="text-xl font-bold text-gray-800 mb-2">Keranjang Anda kosong</h2>
                 <p class="text-gray-500 text-sm mb-8">Belum ada menu yang dipilih. Yuk mulai pesan!</p>
-                <a href="{{ route('menu.index') }}" class="inline-flex items-center gap-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-8 py-3 rounded-xl transition">
+                <a href="{{ route('menu.index') }}" class="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold px-8 py-3 rounded-xl transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     Lihat Menu
                 </a>
@@ -79,7 +79,7 @@
                                          onerror="this.src='https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=80'">
                                 </a>
                                 <div>
-                                    <p class="text-[10px] font-bold uppercase tracking-wider text-yellow-700 mb-0.5">{{ $item['menu']->categoryLabel }}</p>
+                                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-900 mb-0.5">{{ $item['menu']->categoryLabel }}</p>
                                     <h3 class="font-bold text-gray-900 text-sm leading-snug">{{ $item['menu']->name }}</h3>
                                     <p class="text-gray-400 text-xs">{{ $item['menu']->formattedPrice }}</p>
                                 </div>
@@ -152,16 +152,16 @@
                         <div class="border-t border-gray-200 pt-4 mb-5">
                             <div class="flex justify-between">
                                 <span class="font-bold text-gray-900">Estimasi Total</span>
-                                <span class="font-bold text-xl text-yellow-700" id="cart-total">{{ 'Rp ' . number_format($subtotal, 0, ',', '.') }}</span>
+                                <span class="font-bold text-xl text-gray-900" id="cart-total">{{ 'Rp ' . number_format($subtotal, 0, ',', '.') }}</span>
                             </div>
                         </div>
 
 
-                        <a href="{{ route('orders.checkout') }}" class="block w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold text-center py-4 rounded-xl transition shadow-md hover:shadow-lg mb-3">
+                        <a href="{{ route('orders.checkout') }}" class="block w-full bg-gray-900 hover:bg-gray-800 text-white font-bold text-center py-4 rounded-xl transition shadow-md hover:shadow-lg mb-3">
                             Checkout Sekarang
                         </a>
 
-                        <a href="{{ route('menu.index') }}" class="block w-full text-center text-sm text-gray-500 hover:text-yellow-700 py-2 transition">
+                        <a href="{{ route('menu.index') }}" class="block w-full text-center text-sm text-gray-500 hover:text-gray-900 py-2 transition">
                             + Tambah Menu Lainnya
                         </a>
 
@@ -178,7 +178,7 @@
                     </div>
 
                     {{-- Promo banner --}}
-                    <div class="mt-4 bg-yellow-500 rounded-2xl p-4 text-white">
+                    <div class="mt-4 bg-gray-500 rounded-2xl p-4 text-white">
                         <p class="text-xs font-bold uppercase tracking-wider opacity-80 mb-1">Info Pengiriman</p>
                         <p class="font-bold text-sm">Gratis ongkir untuk pickup!</p>
                         <p class="text-xs opacity-80 mt-0.5">Delivery +Rp 10.000 ke wilayah Bandung</p>

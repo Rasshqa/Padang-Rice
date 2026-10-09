@@ -18,7 +18,7 @@
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
             <h2 class="font-bold text-gray-900 text-lg mb-4">Total Pembayaran</h2>
-            <p class="text-4xl font-bold text-yellow-600">{{ $order->formattedTotal }}</p>
+            <p class="text-4xl font-bold text-gray-900">{{ $order->formattedTotal }}</p>
         </div>
 
         <form action="{{ route('payments.store', $order) }}" method="POST">
@@ -49,14 +49,14 @@
                         </div>
                     </label>
                 @empty
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center">
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
                         <p class="text-yellow-800">Belum ada metode pembayaran aktif</p>
                     </div>
                 @endforelse
             </div>
 
             @if($paymentMethods->isNotEmpty())
-                <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 rounded-xl transition">
+                <button type="submit" class="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-4 rounded-xl transition">
                     Lanjutkan
                 </button>
             @endif
@@ -74,10 +74,10 @@ document.querySelectorAll('input[type="radio"][name="payment_method_id"]').forEa
             const circle = label.querySelector('.method-circle');
             const icon = label.querySelector('.method-icon');
             
-            wrapper.classList.remove('border-yellow-500', 'bg-yellow-50');
+            wrapper.classList.remove('border-gray-500', 'bg-gray-50');
             wrapper.classList.add('border-gray-200', 'bg-white');
             
-            circle.classList.remove('border-yellow-500', 'bg-yellow-500');
+            circle.classList.remove('border-gray-500', 'bg-gray-500');
             circle.classList.add('border-gray-300');
             
             icon.classList.add('hidden');
@@ -92,10 +92,10 @@ document.querySelectorAll('input[type="radio"][name="payment_method_id"]').forEa
             const icon = label.querySelector('.method-icon');
             
             wrapper.classList.remove('border-gray-200', 'bg-white');
-            wrapper.classList.add('border-yellow-500', 'bg-yellow-50');
+            wrapper.classList.add('border-gray-500', 'bg-gray-50');
             
             circle.classList.remove('border-gray-300');
-            circle.classList.add('border-yellow-500', 'bg-yellow-500');
+            circle.classList.add('border-gray-500', 'bg-gray-500');
             
             icon.classList.remove('hidden');
             icon.classList.add('block');

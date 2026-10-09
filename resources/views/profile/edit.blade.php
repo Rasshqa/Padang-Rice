@@ -22,7 +22,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Nama Lengkap</label>
                     <input type="text" name="name" required
                            value="{{ old('name', $user->name) }}"
-                           class="w-full border {{ $errors->has('name') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none">
+                           class="w-full border {{ $errors->has('name') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none">
                     @error('name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
 
@@ -37,7 +37,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">No. WhatsApp</label>
                     <input type="text" name="phone" required
                            value="{{ old('phone', $user->phone) }}"
-                           class="w-full border {{ $errors->has('phone') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none">
+                           class="w-full border {{ $errors->has('phone') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none">
                     @error('phone') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
 
@@ -48,7 +48,7 @@
                 <div class="mb-5">
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Password Baru</label>
                     <input type="password" name="password"
-                           class="w-full border {{ $errors->has('password') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                           class="w-full border {{ $errors->has('password') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                            placeholder="Kosongkan jika tidak ingin ubah password">
                     @error('password') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
@@ -56,11 +56,11 @@
                 <div class="mb-8">
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Konfirmasi Password Baru</label>
                     <input type="password" name="password_confirmation"
-                           class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                           class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                            placeholder="Ketik ulang password baru">
                 </div>
 
-                <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 rounded-xl transition">
+                <button type="submit" class="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 rounded-xl transition">
                     Simpan Perubahan
                 </button>
             </form>

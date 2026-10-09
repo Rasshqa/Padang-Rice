@@ -5,7 +5,7 @@
 @section('content')
 {{-- Toast Notification --}}
 <div id="toast" class="fixed top-6 right-6 z-[9999] flex items-center gap-3 bg-gray-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl translate-x-[120%] transition-all duration-500 ease-out max-w-xs">
-    <div id="toast-icon" class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center shrink-0">
+    <div id="toast-icon" class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center shrink-0">
         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
     </div>
     <p id="toast-msg" class="text-sm font-medium leading-snug"></p>
@@ -48,7 +48,7 @@
                         <span class="text-gray-600">Ongkir</span>
                         <span id="checkout-delivery-fee" class="font-semibold">Rp 0</span>
                     </div>
-                    <div class="flex justify-between text-base font-bold text-yellow-700 pt-2 border-t">
+                    <div class="flex justify-between text-base font-bold text-gray-900 pt-2 border-t">
                         <span>Total</span>
                         <span id="checkout-total">Rp 0</span>
                     </div>
@@ -59,7 +59,7 @@
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Nama Lengkap *</label>
                 <input type="text" name="customer_name" required
-                       class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                       class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                        placeholder="Masukkan nama lengkap">
             </div>
 
@@ -67,13 +67,13 @@
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email *</label>
                     <input type="email" name="customer_email" required
-                           class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                           class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                            placeholder="email@contoh.com">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">No. Telepon *</label>
                     <input type="text" name="customer_phone" required
-                           class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                           class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                            placeholder="08xxxxxxxxxx">
                 </div>
             </div>
@@ -82,17 +82,17 @@
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Metode Pengiriman *</label>
                 <div class="grid grid-cols-2 gap-3 mb-3">
-                    <label class="delivery-option relative flex items-center gap-2 p-3 border-2 border-yellow-500 bg-yellow-50 rounded-xl cursor-pointer" id="label-pickup">
+                    <label class="delivery-option relative flex items-center gap-2 p-3 border-2 border-gray-500 bg-gray-50 rounded-xl cursor-pointer" id="label-pickup">
                         <input type="radio" name="delivery_method" value="pickup" checked class="sr-only">
-                        <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4 text-yellow-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="font-bold text-gray-900 text-xs">Ambil Sendiri</p>
                             <p class="text-[10px] text-green-600 font-medium">Gratis</p>
                         </div>
                     </label>
-                    <label class="delivery-option relative flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-yellow-300" id="label-delivery">
+                    <label class="delivery-option relative flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-gray-300" id="label-delivery">
                         <input type="radio" name="delivery_method" value="delivery" class="sr-only">
                         <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center shrink-0">
                             <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
@@ -111,10 +111,10 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Alamat Pengiriman *</label>
                     <div class="relative">
                         <input type="text" id="address-input" name="delivery_address"
-                               class="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-24 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                               class="w-full border border-gray-200 rounded-xl px-4 py-2.5 pr-24 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                                placeholder="Cari alamat...">
                         <button type="button" id="loc-btn" onclick="getCurrentLocation()"
-                                class="absolute right-2 top-1/2 -translate-y-1/2 bg-yellow-600 hover:bg-yellow-700 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-semibold flex items-center gap-1 transition">
+                                class="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-900 hover:bg-gray-800 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-semibold flex items-center gap-1 transition">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             Lokasi
                         </button>
@@ -135,12 +135,12 @@
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Catatan (opsional)</label>
                 <textarea name="notes" rows="2"
-                          class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none resize-none"
+                          class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none resize-none"
                           placeholder="Contoh: Tidak pakai sambal, tingkat pedas sedang"></textarea>
             </div>
 
             <button type="submit" id="submitBtn"
-                    class="w-full bg-yellow-600 hover:bg-yellow-700 active:scale-[0.98] text-white font-bold py-3 rounded-xl transition-all shadow-sm">
+                    class="w-full bg-gray-900 hover:bg-gray-800 active:scale-[0.98] text-white font-bold py-3 rounded-xl transition-all shadow-sm">
                 Buat Pesanan →
             </button>
         </form>
@@ -149,7 +149,7 @@
 
 {{-- Floating Checkout Button --}}
 <button id="floating-checkout-btn" onclick="openCheckout()"
-        class="hidden fixed bottom-6 right-24 z-50 bg-yellow-600 hover:bg-yellow-700 text-white font-bold px-6 py-4 rounded-full shadow-2xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
+        class="hidden fixed bottom-6 right-24 z-50 bg-gray-900 hover:bg-gray-800 text-white font-bold px-6 py-4 rounded-full shadow-2xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
     <span id="floating-cart-count">0</span>
 </button>
@@ -162,13 +162,13 @@
             <div>
                 {{-- Breadcrumb --}}
                 <nav class="text-xs text-gray-400 mb-2 flex items-center gap-1.5">
-                    <a href="{{ route('home') }}" class="hover:text-yellow-600 transition">Home</a>
+                    <a href="{{ route('home') }}" class="hover:text-gray-900 transition">Home</a>
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     <span class="text-gray-700 font-medium">Menu Lengkap</span>
                 </nav>
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900 font-display">Menu Lengkap</h1>
                 <p class="text-gray-500 mt-1">
-                    <span class="font-semibold text-yellow-700">{{ $menus->total() }}</span> hidangan khas Minangkabau tersedia
+                    <span class="font-semibold text-gray-900">{{ $menus->total() }}</span> hidangan khas Minangkabau tersedia
                 </p>
             </div>
 
@@ -178,14 +178,14 @@
                 @if(request('sort')) <input type="hidden" name="sort" value="{{ request('sort') }}"> @endif
                 @if(request('price_min')) <input type="hidden" name="price_min" value="{{ request('price_min') }}"> @endif
                 @if(request('price_max')) <input type="hidden" name="price_max" value="{{ request('price_max') }}"> @endif
-                <div class="flex w-full border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm focus-within:ring-2 focus-within:ring-yellow-500 focus-within:border-transparent transition-all">
+                <div class="flex w-full border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm focus-within:ring-2 focus-within:ring-gray-900 focus-within:border-transparent transition-all">
                     <span class="pl-4 flex items-center text-gray-400">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </span>
                     <input type="text" name="search" value="{{ request('search') }}"
                            placeholder="Cari menu, rendang, gulai..."
                            class="flex-1 px-3 py-3 text-sm outline-none bg-transparent text-gray-700 placeholder-gray-400">
-                    <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white px-5 py-3 font-semibold text-sm transition">
+                    <button type="submit" class="bg-gray-900 hover:bg-gray-800 text-white px-5 py-3 font-semibold text-sm transition">
                         Cari
                     </button>
                 </div>
@@ -205,7 +205,7 @@
                     <div class="flex items-center justify-between mb-5">
                         <h2 class="font-bold text-gray-900 text-base">Filter</h2>
                         @if(request('category') || request('price_min') || request('price_max'))
-                            <a href="{{ route('menu.index', array_filter(['search' => request('search'), 'sort' => request('sort')])) }}" class="text-xs text-yellow-600 hover:text-yellow-700 font-medium transition">Hapus Semua</a>
+                            <a href="{{ route('menu.index', array_filter(['search' => request('search'), 'sort' => request('sort')])) }}" class="text-xs text-gray-900 hover:text-gray-900 font-medium transition">Hapus Semua</a>
                         @endif
                     </div>
 
@@ -233,8 +233,8 @@
                                            class="sr-only peer">
                                     <span class="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg border transition-all
                                           {{ $active
-                                              ? 'bg-yellow-600 border-yellow-600 text-white font-semibold shadow-sm'
-                                              : 'bg-white border-gray-200 text-gray-700 hover:border-yellow-400 hover:bg-yellow-50'
+                                              ? 'bg-gray-900 border-gray-900 text-white font-semibold shadow-sm'
+                                              : 'bg-white border-gray-200 text-gray-700 hover:border-gray-400 hover:bg-gray-50'
                                           }}">
                                         <span class="w-1.5 h-1.5 rounded-full {{ $active ? 'bg-white' : 'bg-gray-300' }}"></span>
                                         {{ $label }}
@@ -251,7 +251,7 @@
                             <div class="relative">
                                 <input type="range" id="priceRange" min="{{ $minPrice }}" max="{{ $maxPrice }}" step="1000"
                                        value="{{ request('price_max', $maxPrice) }}"
-                                       class="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-yellow-600"
+                                       class="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gray-900"
                                        oninput="document.getElementById('priceDisplay').textContent = 'Maks: Rp ' + parseInt(this.value).toLocaleString('id-ID')">
                                 <div class="flex justify-between text-[11px] text-gray-500 mt-2">
                                     <span>Rp {{ number_format($minPrice, 0, ',', '.') }}</span>
@@ -283,7 +283,7 @@
                         $mobileActive = request('category', '') === $val;
                     @endphp
                     <a href="{{ route('menu.index', array_filter(['category' => $val, 'search' => request('search'), 'sort' => request('sort')])) }}"
-                       class="shrink-0 px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap {{ $mobileActive ? 'bg-yellow-600 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-200 hover:border-yellow-400' }}">
+                       class="shrink-0 px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap {{ $mobileActive ? 'bg-gray-900 text-white shadow-sm' : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-400' }}">
                         {{ $label }}
                     </a>
                 @endforeach
@@ -296,7 +296,7 @@
                 </p>
                 <div class="relative">
                     <select onchange="sortMenu(this.value)"
-                            class="appearance-none bg-white border border-gray-200 rounded-lg pl-4 pr-9 py-2 text-sm font-medium text-gray-700 cursor-pointer focus:ring-2 focus:ring-yellow-500 focus:border-transparent shadow-sm">
+                            class="appearance-none bg-white border border-gray-200 rounded-lg pl-4 pr-9 py-2 text-sm font-medium text-gray-700 cursor-pointer focus:ring-2 focus:ring-gray-900 focus:border-transparent shadow-sm">
                         <option value="" {{ !request('sort') ? 'selected' : '' }}>Terpopuler</option>
                         <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Harga Terendah</option>
                         <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Harga Tertinggi</option>
@@ -313,7 +313,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-gray-700 mb-2">Menu tidak ditemukan</h3>
                     <p class="text-gray-400 text-sm mb-6">Coba ubah filter atau kata pencarian Anda</p>
-                    <a href="{{ route('menu.index') }}" class="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-2.5 rounded-lg transition">
+                    <a href="{{ route('menu.index') }}" class="inline-block bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-2.5 rounded-lg transition">
                         Lihat Semua Menu
                     </a>
                 </div>
@@ -357,7 +357,7 @@
                                 </div>
 
                                 <a href="{{ route('menu.show', $menu) }}" class="block mb-2">
-                                    <h3 class="font-bold text-gray-900 text-lg leading-tight hover:text-yellow-700 transition-colors line-clamp-1">{{ $menu->name }}</h3>
+                                    <h3 class="font-bold text-gray-900 text-lg leading-tight hover:text-gray-900 transition-colors line-clamp-1">{{ $menu->name }}</h3>
                                 </a>
 
                                 <p class="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4">{{ $menu->description }}</p>
@@ -367,7 +367,7 @@
 
                                     @if($menu->available)
                                         <button onclick="addToCart({{ $menu->id }}, '{{ addslashes($menu->name) }}')"
-                                                class="cart-btn-{{ $menu->id }} px-3 py-1.5 bg-gray-900 hover:bg-yellow-600 active:bg-yellow-700 text-white text-xs font-semibold rounded-md flex items-center gap-1 transition-colors">
+                                                class="cart-btn-{{ $menu->id }} px-3 py-1.5 bg-gray-900 hover:bg-gray-900 active:bg-gray-800 text-white text-xs font-semibold rounded-md flex items-center gap-1 transition-colors">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                             Tambah
                                         </button>
@@ -417,11 +417,11 @@ document.addEventListener('DOMContentLoaded', () => {
         radio.addEventListener('change', function() {
             // Update UI label highlight
             document.querySelectorAll('.delivery-option').forEach(label => {
-                label.classList.remove('border-yellow-500', 'bg-yellow-50');
+                label.classList.remove('border-gray-500', 'bg-gray-50');
                 label.classList.add('border-gray-200');
             });
             const parentLabel = this.closest('.delivery-option');
-            parentLabel.classList.add('border-yellow-500', 'bg-yellow-50');
+            parentLabel.classList.add('border-gray-500', 'bg-gray-50');
             parentLabel.classList.remove('border-gray-200');
             
             // Show/hide delivery fields
@@ -709,7 +709,7 @@ document.getElementById('address-input')?.addEventListener('input', function(e) 
                 const sug = document.getElementById('suggestions');
                 if (!data.length) { sug.classList.add('hidden'); return; }
                 sug.innerHTML = data.map(item =>
-                    `<div class="px-4 py-2 hover:bg-yellow-50 cursor-pointer border-b last:border-0 text-xs"
+                    `<div class="px-4 py-2 hover:bg-gray-50 cursor-pointer border-b last:border-0 text-xs"
                           onclick="selectPlace(${item.lat}, ${item.lon}, '${item.display_name.replace(/'/g, "\\'")}')">
                         ${item.display_name}
                     </div>`
@@ -745,7 +745,7 @@ function showToast(msg, type = 'success') {
 
     toastMsg.textContent = msg;
     if (type === 'success') {
-        toastIcon.className = 'w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center shrink-0';
+        toastIcon.className = 'w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center shrink-0';
         toastIcon.innerHTML = `<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>`;
     } else {
         toastIcon.className = 'w-8 h-8 bg-red-500 rounded-full flex items-center justify-center shrink-0';

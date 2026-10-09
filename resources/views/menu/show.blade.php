@@ -22,10 +22,10 @@
                          class="w-full h-full object-cover">
                 </div>
                 <div class="p-8 flex flex-col justify-center">
-                    <span class="inline-block w-fit px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold mb-4">{{ $menu->categoryLabel }}</span>
+                    <span class="inline-block w-fit px-3 py-1 bg-gray-100 text-gray-900 rounded-full text-sm font-semibold mb-4">{{ $menu->categoryLabel }}</span>
                     <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ $menu->name }}</h1>
                     <p class="text-gray-600 mb-6 leading-relaxed">{{ $menu->description ?? 'Deskripsi belum tersedia.' }}</p>
-                    <p class="text-3xl font-bold text-yellow-700 mb-8">{{ $menu->formattedPrice }}</p>
+                    <p class="text-3xl font-bold text-gray-900 mb-8">{{ $menu->formattedPrice }}</p>
 
                     @if($menu->available)
                         <form action="{{ route('cart.add') }}" method="POST" class="flex items-center gap-4">
@@ -36,7 +36,7 @@
                                 <input type="number" name="quantity" id="qty" value="1" min="1" class="w-16 text-center border-x py-2 focus:outline-none">
                                 <button type="button" onclick="document.getElementById('qty').value = parseInt(document.getElementById('qty').value) + 1" class="px-4 py-2 text-gray-600 hover:bg-gray-100">+</button>
                             </div>
-                            <button type="submit" class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg transition">
+                            <button type="submit" class="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-lg transition">
                                 Tambah ke Keranjang
                             </button>
                         </form>

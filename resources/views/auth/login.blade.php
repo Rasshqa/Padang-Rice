@@ -24,7 +24,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email</label>
                     <input type="email" name="email" required autofocus
                            value="{{ old('email') }}"
-                           class="w-full border {{ $errors->has('email') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                           class="w-full border {{ $errors->has('email') ? 'border-red-400 bg-red-50' : 'border-gray-200' }} rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                            placeholder="email@contoh.com">
                     @error('email') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                 </div>
@@ -33,7 +33,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Password</label>
                     <div class="relative">
                         <input type="password" name="password" id="password" required
-                               class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition outline-none"
+                               class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm focus:ring-2 focus:ring-gray-900 focus:border-transparent transition outline-none"
                                placeholder="Masukkan password">
                         <button type="button" onclick="togglePassword('password', 'toggleIcon')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                             <svg id="toggleIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -46,17 +46,17 @@
                 </div>
 
                 <div class="flex items-center mb-6">
-                    <input type="checkbox" name="remember" id="remember" class="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500">
+                    <input type="checkbox" name="remember" id="remember" class="w-4 h-4 text-gray-900 border-gray-300 rounded focus:ring-gray-900">
                     <label for="remember" class="ml-2 text-sm text-gray-600">Ingat saya</label>
                 </div>
 
-                <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 rounded-xl transition">
+                <button type="submit" class="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 rounded-xl transition">
                     Masuk
                 </button>
 
                 <p class="text-center text-sm text-gray-600 mt-6">
                     Belum punya akun? 
-                    <a href="{{ route('register') }}" class="text-yellow-600 hover:text-yellow-700 font-semibold">Daftar</a>
+                    <a href="{{ route('register') }}" class="text-gray-900 hover:text-gray-900 font-semibold">Daftar</a>
                 </p>
             </form>
         </div>
